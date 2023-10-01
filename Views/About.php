@@ -14,7 +14,7 @@ include "Master/header.php";
 
     <div class="row position-relative">
 
-      <div class="col-lg-7 about-img" style="background-image: url(../Assets/Images/about.jpg);"></div>
+      <div class="col-lg-7 about-img" style="background-image: url(../Assets/Images/breadcrumbs-bg-1.png);"></div>
 
       <div class="col-lg-7">
         <h2>It's result are also to good</h2>
@@ -26,6 +26,7 @@ include "Master/header.php";
             <li><i class="bi bi-check-circle"></i> <span>WE Have Best Product</span></li>
             <li><i class="bi bi-check-circle"></i> <span>We can Provide Decorative items and other Things.</span></li>
             <li><i class="bi bi-check-circle"></i> <span>Trustable 100%</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>We can make cutome products as you want.</span></li>
           </ul>
           <!-- <p>Vitae autem velit excepturi fugit. Animi ad non. Eligendi et non nesciunt suscipit repellendus porro in quo eveniet. Molestias in maxime doloremque.</p> -->
 
