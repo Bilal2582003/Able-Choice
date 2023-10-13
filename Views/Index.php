@@ -70,7 +70,7 @@ include "../Model/connection.php";
 
           </ul><!-- End Projects Filters -->
 
-          <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+          <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200" id="">
 
             <div class="col-lg-4 col-md-6 portfolio-item filter-remodelin">
               <div class="portfolio-content h-100">
@@ -115,6 +115,7 @@ include "../Model/connection.php";
                   <h4>Design 1</h4>
                   <p>Lorem ipsum, dolor sit amet consectetur</p>
                   <a href="../Assets/Images/projects/design-1.jpg" title="Repairs 1" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="../Assets/Images/projects/design-1.jpg" title="Repairs 1" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="ProductDetail.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
               </div>
@@ -134,7 +135,9 @@ include "../Model/connection.php";
                   <?php
                   if(!empty($row['image2']) ){
                     ?>
-                  <a href="../Assets/Images/Products/<?php echo $row['image1']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="../Assets/Images/Products/<?php echo $row['image1']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-<?php echo $row['product_category_name']?>" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+
+                  <a href="../Assets/Images/Products/<?php echo $row['image2']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-<?php echo $row['product_category_name']?>" class="glightbox"><i class="bi bi-zoom-in"></i></a>
                     <?php
                   }
                   ?>
