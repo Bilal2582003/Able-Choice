@@ -3,6 +3,11 @@ $page="Index";
 include "Master/header.php";
 include "../Model/connection.php";
 ?>
+<style>
+  .inImage{
+    height:313px
+  }
+</style>
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="hero">
 
@@ -128,16 +133,21 @@ include "../Model/connection.php";
               ?>
                 <div class="col-lg-4 col-md-6 portfolio-item filter-<?php echo $row['product_category_name']?>">
               <div class="portfolio-content h-100">
-                <img src="../Assets/Images/Products/<?php echo $row['image1']?>" class="img-fluid" alt="">
+                <img src="../Assets/Images/Products/<?php echo $row['image1']?>" class="img-fluid inImage" alt="">
                 <div class="portfolio-info">
                   <h4 style="text-transform:capitalize"><?php echo $row['product_category_name']?></h4>
                   <p><?php echo $row['name']?></p>
                   <?php
                   if(!empty($row['image2']) ){
                     ?>
-                  <a href="../Assets/Images/Products/<?php echo $row['image1']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-<?php echo $row['product_category_name']?>" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="../Assets/Images/Products/<?php echo $row['image1']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-<?php echo $row['product_category_name']?>" class="glightbox preview-link inImage"><i class="bi bi-zoom-in"></i></a>
 
-                  <a href="../Assets/Images/Products/<?php echo $row['image2']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-<?php echo $row['product_category_name']?>" class="glightbox"><i class="bi bi-zoom-in"></i></a>
+                  <a href="../Assets/Images/Products/<?php echo $row['image2']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-<?php echo $row['product_category_name']?>" class="glightbox inImage"></a>
+                    <?php
+                  }
+                  if(!empty($row['image3'])){
+                    ?>
+                    <a href="../Assets/Images/Products/<?php echo $row['image3']?>" title="<?php echo $row['name']?>" data-gallery="portfolio-gallery-<?php echo $row['product_category_name']?>" class="glightbox inImage"></a>
                     <?php
                   }
                   ?>
