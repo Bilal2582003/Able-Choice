@@ -147,12 +147,12 @@ include "Master/header.php";
 
 
 <!-- ======= Testimonials Section ======= -->
-<section id="testimonials" class="testimonials section-bg">
+<!-- <section id="testimonials" class="testimonials section-bg">
   <div class="container" data-aos="fade-up">
 
     <div class="section-header">
       <h2>Products</h2>
-      <!-- <p>Quam sed id excepturi ccusantium dolorem ut quis dolores nisi llum nostrum enim velit qui ut et autem uia reprehenderit sunt deleniti</p> -->
+      
     </div>
 
     <div class="slides-2 swiper">
@@ -174,7 +174,7 @@ include "Master/header.php";
               </p>
             </div>
           </div>
-        </div><!-- End testimonial item -->
+        </div>
 
         <div class="swiper-slide">
           <div class="testimonial-wrap">
@@ -192,7 +192,7 @@ include "Master/header.php";
               </p>
             </div>
           </div>
-        </div><!-- End testimonial item -->
+        </div>
 
         <div class="swiper-slide">
           <div class="testimonial-wrap">
@@ -210,7 +210,7 @@ include "Master/header.php";
               </p>
             </div>
           </div>
-        </div><!-- End testimonial item -->
+        </div>
 
         <div class="swiper-slide">
           <div class="testimonial-wrap">
@@ -228,7 +228,7 @@ include "Master/header.php";
               </p>
             </div>
           </div>
-        </div><!-- End testimonial item -->
+        </div>
 
         <div class="swiper-slide">
           <div class="testimonial-wrap">
@@ -246,14 +246,15 @@ include "Master/header.php";
               </p>
             </div>
           </div>
-        </div><!-- End testimonial item -->
+        </div>
 
       </div>
       <div class="swiper-pagination"></div>
     </div>
 
   </div>
-</section><!-- End Testimonials Section -->
+</section> -->
+<!-- End Testimonials Section -->
 
 </main><!-- End #main -->
 <?php

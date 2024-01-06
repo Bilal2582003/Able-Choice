@@ -1,5 +1,5 @@
 <?php
-$page="Index";
+$page="home";
 include "Master/header.php";
 include "../Model/connection.php";
 ?>
@@ -45,8 +45,12 @@ include "../Model/connection.php";
   </section><!-- End Hero Section -->
 
   <main id="main">
+
+  <?php
+  include "ProductList.php";
+  ?>
         <!-- ======= Our Projects Section ======= -->
-        <section id="projects" class="projects">
+        <!-- <section id="projects" class="projects">
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
@@ -73,7 +77,7 @@ include "../Model/connection.php";
             }
             ?>
 
-          </ul><!-- End Projects Filters -->
+          </ul>
 
           <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200" id="">
 
@@ -87,7 +91,7 @@ include "../Model/connection.php";
                   <a href="ProductDetail.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
               </div>
-            </div><!-- End Projects Item -->
+            </div>
 
             <div class="col-lg-4 col-md-6 portfolio-item filter-construction">
               <div class="portfolio-content h-100">
@@ -99,7 +103,7 @@ include "../Model/connection.php";
                   <a href="ProductDetail.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
               </div>
-            </div><!-- End Projects Item -->
+            </div>
 
             <div class="col-lg-4 col-md-6 portfolio-item filter-repairs">
               <div class="portfolio-content h-100">
@@ -111,7 +115,7 @@ include "../Model/connection.php";
                   <a href="ProductDetail.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
               </div>
-            </div><!-- End Projects Item -->
+            </div>
 
             <div class="col-lg-4 col-md-6 portfolio-item filter-design">
               <div class="portfolio-content h-100">
@@ -124,10 +128,10 @@ include "../Model/connection.php";
                   <a href="ProductDetail.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
               </div>
-            </div><!-- End Projects Item -->
+            </div>
 
             <?php
-            $query="SELECT product.*, product_category.name as product_category_name from product join product_category on product.product_category_id= product_category.id where product.deleted_at is null";
+            $query="SELECT product.*, product_category.name as product_category_name from product join product_category on product.product_category_id= product_category.id where product.deleted_at is null limit 24";
             $res=mysqli_query($con,$query);
             while($row=mysqli_fetch_assoc($res) ){
               ?>
@@ -160,12 +164,13 @@ include "../Model/connection.php";
             ?>
 
 
-          </div><!-- End Projects Container -->
+          </div>
 
         </div>
 
       </div>
-    </section><!-- End Our Projects Section -->
+    </section> -->
+    <!-- End Our Projects Section -->
   </main><!-- End #main -->
 
 
