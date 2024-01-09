@@ -1,6 +1,5 @@
 <?php
 include "../Model/connection.php";
-
 ?>
 
 <style>
@@ -121,14 +120,14 @@ include "../Model/connection.php";
 
 
 <!-- Modal structure -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="moreDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- Add your modal content here -->
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add to Cart</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal('moreDetailModal')">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -140,14 +139,45 @@ include "../Model/connection.php";
             <div class="modal-footer">
                 <!-- Add your modal footer content here -->
                 <!-- For example: -->
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('moreDetailModal')">Close</button>
+                <button type="button" class="btn btn-primary" onclick="closeModal('moreDetailModal')">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Add your modal content here -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add to Cart</h5>
+                <button type="button" class="close"  onclick="closeModal('addToCartModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your modal body content here -->
+                <!-- For example: -->
+                <p>This is the content of your modal.</p>
+            </div>
+            <div class="modal-footer">
+                <!-- Add your modal footer content here -->
+                <!-- For example: -->
+                <button type="button" class="btn btn-secondary" onclick="closeModal('addToCartModal')">Close</button>
+                <button type="button" onclick="closeModal('addToCartModal')" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    function openModal(data){
+        $("#"+data).modal("show")
+    }
+    function closeModal(data){
+        $("#"+data).modal("hide")
+    }
     // Function to load more products
     function loadMoreProducts() {
         $(document).ready(function () {
@@ -181,9 +211,9 @@ include "../Model/connection.php";
     //     }
     // }
     $(document).ready(function () {
-        $("#moreDetail").on('click', function () {
-            $('#exampleModal').modal("show")
-        })
+        // $("#moreDetail").on('click', function () {
+        //     $('#exampleModal').modal("show")
+        // })
         // Handle filter button click
         $('li[data-filter]').on('click', function () {
             var filterValue = $(this).data('filter');
