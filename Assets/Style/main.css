@@ -247,12 +247,18 @@ section {
 --------------------------------------------------------------*/
 .header {
   z-index: 997;
-  position: absolute;
+  position: fixed;
   padding: 30px 0;
   top: 0;
   left: 0;
   right: 0;
+  transition: background-color 0.3s ease;
 }
+
+.header.scrolled {
+  background-color: rgba(89, 87, 87, 0.9); /* Adjust the background color and opacity as needed */
+}
+
 
 .header .logo img {
   max-height: 40px;
@@ -2665,4 +2671,10 @@ section {
 
 .footer .footer-legal .credits a {
   color: var(--color-primary);
+}
+.cross{
+  border:none;
+  background-color:white;
+  font-size:1.5rem;
+  color:red;
 }

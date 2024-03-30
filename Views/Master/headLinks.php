@@ -14,7 +14,8 @@
   <link href="../Assets/Vendor/aos/aos.css" rel="stylesheet">
   <link href="../Assets/Vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="../Assets/Vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+  <script src="../Assets/Vendor/jquery/jquery.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="../Assets/Style/main.css" rel="stylesheet">

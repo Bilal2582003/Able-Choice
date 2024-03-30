@@ -2,6 +2,7 @@
 $page="home";
 include "Master/header.php";
 include "../Model/connection.php";
+
 ?>
 <style>
   .inImage{
@@ -10,7 +11,7 @@ include "../Model/connection.php";
 </style>
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="hero">
-
+ 
     <div class="info d-flex align-items-center">
       <div class="container">
         <div class="row justify-content-center">

@@ -211,3 +211,49 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+$(document).ready(function() {
+    var header = $("#header");
+
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if (scroll > 0) {
+            header.addClass("scrolled");
+        } else {
+            header.removeClass("scrolled");
+        }
+    });
+});
+
+function closeModal(data) {
+  $("#" + data).modal("hide")
+}
+function openModal(data, id) {
+  $("#" + data).modal("show")
+  if (data == 'moreDetailModal') {
+      $.ajax({
+          url: '../Controllers/_getModalData.php', // Replace with your server endpoint
+          type: 'POST',
+          data: {
+              id: id,
+          },
+          success: function (data) {
+              $("#moreDetailModalData").html(data)
+              // Initialize Swiper after HTML content is loaded
+              var swiper = new Swiper('.slides-1', {
+                  slidesPerView: 1,
+                  spaceBetween: 30,
+                  loop: true,
+                  pagination: {
+                      el: '.swiper-pagination',
+                      clickable: true,
+                  },
+                  navigation: {
+                      nextEl: '.swiper-button-next',
+                      prevEl: '.swiper-button-prev',
+                  },
+              });
+          }
+      })
+  }
+}
