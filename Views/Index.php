@@ -2,7 +2,6 @@
 $page="home";
 include "Master/header.php";
 include "../Model/connection.php";
-
 ?>
 <style>
   .inImage{

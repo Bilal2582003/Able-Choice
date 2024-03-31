@@ -253,6 +253,7 @@ function openModal(data, id) {
                       prevEl: '.swiper-button-prev',
                   },
               });
+              
           }
       })
   }
