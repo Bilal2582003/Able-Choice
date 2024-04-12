@@ -17,7 +17,7 @@ include "../Model/connection.php";
           <div class="col-lg-6 text-center">
             <h2 data-aos="fade-down">Welcome to <span>Able Coice</span></h2>
             <p data-aos="fade-up">Our Company name is <strong>Al-Sheikh Enterprise</strong>. We are providing our service till 25 years. We have <b>one of best quality products</b>.</p>
-            <a data-aos="fade-up" data-aos-delay="200" href="#get-started" class="btn-get-started">See Our Products</a>
+            <a data-aos="fade-up" data-aos-delay="200" href="Product.php" class="btn-get-started">See Our Products</a>
           </div>
         </div>
       </div>
@@ -172,9 +172,13 @@ include "../Model/connection.php";
     </section> -->
     <!-- End Our Projects Section -->
   </main><!-- End #main -->
-
-
-<?php
+  
+  <?php
 include "Master/footer.php";
-
 ?>
+
+<script>
+  var main =document.getElementById("main")
+  main.style = 'display:block'
+
+</script>
