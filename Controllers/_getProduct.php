@@ -19,10 +19,10 @@ if (mysqli_num_rows($res) > 0) {
             <p>
                     ' . $row['name'] . '
                     </p>
-                    <button title="Add To Cart"
+                    <!--button title="Add To Cart"
                                 data-gallery="portfolio-gallery-book" class="glightbox preview-link " style="border:0px;background-color:transparent" onclick="openModal(`addToCartModal`)"><i
-                                    class="bi bi-cart-plus"></i></button>
-                    <button title="More Details" class="details-link" style="border:0px;background-color:transparent" id="moreDetail" onclick="openModal(`moreDetailModal`, ' . $row['id'] .' )"><i
+                                    class="bi bi-cart-plus"></i></button-->
+                    <button title="More Details" class="details-link" style="border:0px;background-color:transparent;" id="moreDetail" onclick="openModal(`moreDetailModal`, ' . $row['id'] .' )"><i
                     class="bi bi-link-45deg" style="content:"\f470""></i></button>
                     </div>
                     </div>

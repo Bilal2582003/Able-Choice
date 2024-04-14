@@ -14,7 +14,7 @@ if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
                 $totalSum +=$row['total_amount'];
                 $output .='<tr rowspan="2">
                 <td style="display:none">'.$row['id'].'</td>
-                            <td><input type="checkbox" class="cartChk"></td>
+                           
                             <td class="w-40">
                                 <img src="../Assets/Images/Products/' . $row['img'] . '"
                                     class="img-fluid img-thumbnail" alt="Sheep">

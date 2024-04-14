@@ -106,10 +106,10 @@
                 </div>
             </div>
             <div class="modal-footer border-top-0 ">
-                <button type="button" class="cartBtn">Cash On Delivery (COD)</button>
-                <button type="button" class="cartBtn">Pay Now</button>
+                <button type="button" class="cartBtn">CHECK OUT</button>
+                <!-- <button type="button" class="cartBtn">Pay Now</button> -->
 
-                <button type="button" class="cartBtn" onclick="closeModal('cartModal')">Close</button>
+                <button type="button" class="cartBtn" onclick="closeModal('cartModal')">CONTINUE SHOPING</button>
 
             </div>
         </div>
@@ -168,7 +168,7 @@
                         $('#AddToCardTableData').html('')
                     }
                     $("#totalSum").html(sum)
-                    $("#AddToCardIcon").html(rowCount)
+                    $("#addToCardIconValue").html(rowCount);
                 }
             
         })

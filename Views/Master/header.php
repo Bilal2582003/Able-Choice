@@ -49,6 +49,8 @@
               <!-- <div class="containerAddCArt"> -->
                 <!-- <button type="button" class="btn" style="color:gold;" > -->
                   <i class="fa fa-shopping-cart btn text-warning" style="padding:10px;margin-left:0px; font-size:18px;font-weight:bolder"   aria-hidden="true" id="addToCardIcon"></i>
+                  <span class="badge" id='addToCardIconValue'> 5 </span>
+                  <!-- <span id="addToCardIconValue" style="position:absolute;top:-10px;right:-10px;background-color:red;color:white;border-radius:50%;padding:5px;">0</span>  -->
                 <!-- </button> -->
               <!-- </div> -->
 

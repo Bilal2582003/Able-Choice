@@ -56,7 +56,7 @@ if (isset($_POST['id'])) {
                                             <br>
 
                                             <div class="row justify-content-flex-start" style="align-items:center">
-                                            <div class="col-sm-3 ">
+                                            <div class="col-sm-4 ">
                                                 <div class="input-group" >
                                                     <div class="input-group-prepend">
                                                         <button type="button"  class="btn btn-secondary decrementBtn">-</button>
@@ -67,7 +67,7 @@ if (isset($_POST['id'])) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-7">
                                                 <button class="btn cartBtn" id="AddToCartBtn">Add To Cart</button>
                                             </div>
                                         </div>
