@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div class="modal-footer border-top-0 ">
-                <button type="button" class="cartBtn">CHECK OUT</button>
+                <button type="button" class="cartBtn"><a href="Checkut.php">CHECK OUT</a></button>
                 <!-- <button type="button" class="cartBtn">Pay Now</button> -->
 
                 <button type="button" class="cartBtn" onclick="closeModal('cartModal')">CONTINUE SHOPING</button>

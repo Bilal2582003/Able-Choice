@@ -96,12 +96,10 @@ include "../Model/connection.php";
 
             <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
                 <li data-filter="*" class="filter-active">All</li>
-                <!-- <li data-filter=".filter-remodelin">Remodelin</li>
-                <li data-filter=".filter-construction">Construction</li>
-                <li data-filter=".filter-repairs">Repairs</li>
-                <li data-filter=".filter-design">Design</li> -->
+                
 
                 <?php
+                
                 $query = "SELECT * from product_category where deleted_at is null";
                 $res = mysqli_query($con, $query);
                 while ($row = mysqli_fetch_assoc($res)) {
@@ -115,71 +113,46 @@ include "../Model/connection.php";
 
             </ul><!-- End Projects Filters -->
 
-            <div class="row gy-4 portfolio-container h-100" data-aos="fade-up" data-aos-delay="200" id="productListDiv">
+            <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200" id="productListDiv"
+                >
 
-                <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-remodelin">
-                    <div class="portfolio-content h-100">
-                        <img src="../Assets/Images/projects/remodeling-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Remodeling 1</h4>
-                            <p>Lorem ipsum, dolor sit amet consectetur</p>
-                            <a href="../Assets/Images/projects/remodeling-1.jpg" title="Remodeling 1"
-                                data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="ProductDetail.php" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
+                <?php
+
+                // $counter = $_POST['counter'];
+                $query = "SELECT product.*, product_category.name as product_category_name from product join product_category on product.product_category_id= product_category.id where product.deleted_at is null";
+                $res = mysqli_query($con, $query);
+                if (mysqli_num_rows($res) > 0) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        ?>
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-<?php echo $row["product_category_name"] ?>">
+                            <div class="portfolio-content h-100">
+                                <img src="../Assets/Images/Products/<?php echo $row['image1'] ?>" class="img-fluid inImage"
+                                    alt="">
+                                <div class="portfolio-info">
+                                    <h4 style="text-transform: capitalize">
+                                        <?php echo $row['product_category_name'] ?>
+                                    </h4>
+                                    <p>
+                                        <?php echo $row['name'] ?>
+                                    </p>
+                                    <!--button title="Add To Cart"
+                                data-gallery="portfolio-gallery-book" class="glightbox preview-link " style="border:0px;background-color:transparent" onclick="openModal(`addToCartModal`)"><i
+                                    class="bi bi-cart-plus"></i></button-->
+                                    <button title="More Details" class="details-link"
+                                        style="border:0px;background-color:transparent;" id="moreDetail"
+                                        onclick="openModal(`moreDetailModal`, <?php echo $row['id'] ?> )"><i
+                                            class="bi bi-link-45deg" style="content:" \f470""></i></button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div> -->
 
-                <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-construction">
-                    <div class="portfolio-content h-100">
-                        <img src="../Assets/Images/projects/construction-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Construction 1</h4>
-                            <p>Lorem ipsum, dolor sit amet consectetur</p>
-                            <a href="../Assets/Images/projects/construction-1.jpg" title="Construction 1"
-                                data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="ProductDetail.php" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-4 col-md-6 portfolio-item filter-repairs">
-                    <div class="portfolio-content h-100">
-                        <img src="../Assets/Images/projects/repairs-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Repairs 1</h4>
-                            <p>Lorem ipsum, dolor sit amet consectetur</p>
-                            <a href="../Assets/Images/projects/repairs-1.jpg" title="Repairs 1"
-                                data-gallery="portfolio-gallery-repairs" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="ProductDetail.php" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div>
-                </div>
+                        <?php
+                    }
 
-                <div class="col-lg-4 col-md-6 portfolio-item filter-design">
-                    <div class="portfolio-content h-100">
-                        <img src="../Assets/Images/projects/design-1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Design 1</h4>
-                            <p>Lorem ipsum, dolor sit amet consectetur</p>
-                            <a href="../Assets/Images/projects/design-1.jpg" title="Repairs 1"
-                                data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="../Assets/Images/projects/design-1.jpg" title="Repairs 1"
-                                data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="ProductDetail.php" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div>
-                </div> -->
-
+                }
+                ?>
+               
             </div><!-- End Projects Container -->
 
         </div>
@@ -205,100 +178,7 @@ include "../Model/connection.php";
                 <!-- ======= Projet Details Section ======= -->
                 <section id="project-details" class="project-details">
                     <div class="container" id="moreDetailModalData" data-aos="fade-up" data-aos-delay="100">
-                        <!-- <div class="row" >
-                            <div class="col-lg-6">
-                               
-                                <div class="position-relative h-50">
-                                    <div class="slides-1 portfolio-details-slider swiper">
-                                        <div class="swiper-wrapper align-items-center">
-                                            <div class="swiper-slide">
-                                                <img src="../Assets/Images/projects/remodeling-1.jpg" alt="">
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <img src="../Assets/Images/projects/construction-1.jpg" alt="">
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <img src="../Assets/Images/projects/design-1.jpg" alt="">
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <img src="../Assets/Images/projects/repairs-1.jpg" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="swiper-pagination"></div>
-                                    </div>
-                                    <div class="swiper-button-prev"></div>
-                                    <div class="swiper-button-next"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                              
-                                <div class="row justify-content-between gy-4 mt-4">
-                                    <div class="col-lg-12">
-                                        <div class="portfolio-description">
-                                            <h2>This is an example of portfolio detail</h2>
-                                            <p>
-                                                Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque
-                                                inventore
-                                                commodi labore quia quia. Exercitationem repudiandae officiis neque
-                                                suscipit non
-                                                officia eaque itaque enim. Voluptatem officia accusantium nesciunt est
-                                                omnis
-                                                tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt
-                                                eius.
-                                            </p>
-                                            <p>
-                                                Amet consequatur qui dolore veniam voluptatem voluptatem sit. Non
-                                                aspernatur
-                                                atque natus ut cum nam et. Praesentium error dolores rerum minus sequi
-                                                quia
-                                                veritatis eum. Eos et doloribus doloremque nesciunt molestiae
-                                                laboriosam.
-                                            </p>
-                                            <div class="row"><span class="col-sm-2 text-center size">Qty: </span> <input
-                                                    class="col-sm-4" type="number" value="1" min="1" id="qty">
-                                                    <span class="col-sm-2 text-center size">Total:</span><div class="col-sm-4 " id="totalAmount">0</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="row m-5">
-                                <div class="col-lg-6">
-                                    <div class="portfolio-info">
-                                        <h3>Project information</h3>
-                                        <div class="row">
-                                            <div class="">
-                                                <ul>
-                                                    <li><strong>Category</strong> <span>Web design</span></li>
-                                                    <li><strong>Brand</strong> <span>Able Choice Company</span></li>
-                                                    <li><strong>Total Quantity</strong> <span>500</span></li>
-                                                    <li><strong>Per Product Amount</strong> <span id="perAmount">2000</span></li>
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6"
-                                    style="display: flex; justify-content: center; align-items: center; margin: 10px auto;">
-                                    <div class="row">
-                                        <div class="col-12 mb-2">
-                                            <button class="btn green btn-block" style="width: 80%;">Buy
-                                                Now</button>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn yellow btn-block" style="width: 80%;">Add To
-                                                Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                        </div> -->
-                    </div>
+                        </div>
                 </section>
                 <!-- End Projet Details Section -->
             </div>
@@ -336,39 +216,10 @@ include "../Model/connection.php";
         </div>
     </div>
 </div>
+
 <? include "Master/footerLink.php"; ?>
 
 <script>
-
-    // function openModal(data, id) {
-    //     $("#" + data).modal("show")
-    //     if (data == 'moreDetailModal') {
-    //         $.ajax({
-    //             url: '../Controllers/_getModalData.php', // Replace with your server endpoint
-    //             type: 'POST',
-    //             data: {
-    //                 id: id,
-    //             },
-    //             success: function (data) {
-    //                 $("#moreDetailModalData").html(data)
-    //                 // Initialize Swiper after HTML content is loaded
-    //                 var swiper = new Swiper('.slides-1', {
-    //                     slidesPerView: 1,
-    //                     spaceBetween: 30,
-    //                     loop: true,
-    //                     pagination: {
-    //                         el: '.swiper-pagination',
-    //                         clickable: true,
-    //                     },
-    //                     navigation: {
-    //                         nextEl: '.swiper-button-next',
-    //                         prevEl: '.swiper-button-prev',
-    //                     },
-    //                 });
-    //             }
-    //         })
-    //     }
-    // }
 
     // Function to load more products
     function loadMoreProducts() {
@@ -394,15 +245,6 @@ include "../Model/connection.php";
         })
     }
 
-    loadMoreProducts();
-    // function checkScroll() {
-    //     var productListDiv = $('#productListDiv');
-    //     var scrollTop = $(document).scrollTop();
-    //     var productListDivHeight = productListDiv.height();
-    //     if (scrollTop > productListDivHeight + 50) {
-    //         loadMoreProducts();
-    //     }
-    // }
     function totalAmount(action, data) {
         var parent = $(data).parent().parent();
         var qty = $(parent).find('.qty');
@@ -410,22 +252,22 @@ include "../Model/connection.php";
         var parent_parent = $(parent).parent().parent().parent();
         var perAmount = $(parent_parent).find(".perAmount");
         var totalAmountElem = $(parent_parent).find(".totalAmount");
-        if(qty.val()){
+        if (qty.val()) {
             var qtyValue = parseInt(qty.val());
-        }else{
+        } else {
             qtyValue = 1
         }
 
         if (action == '+') {
             qtyValue++;
-        }  else if (action == '-') {
+        } else if (action == '-') {
             qtyValue--;
         }
 
         if (qtyValue < 1 && action != '*') {
-                qtyValue = 1;
+            qtyValue = 1;
         }
-         
+
 
         qty.val(qtyValue);
 
@@ -435,15 +277,15 @@ include "../Model/connection.php";
         totalAmountElem.html(total.toFixed(2));
         console.log(totalAmountElem)
     }
-    
+
     $(document).ready(function () {
-        function qty1(element){
-                var parent = $(element).parent().find(".decrementBtn");
-                console.log($(element).val())
-                // if( $(element).val() ){
-                    totalAmount('*', parent);
-                // }
-            }
+        function qty1(element) {
+            var parent = $(element).parent().find(".decrementBtn");
+            console.log($(element).val())
+            // if( $(element).val() ){
+            totalAmount('*', parent);
+            // }
+        }
 
         $(document).on('click', '.incrementBtn', function () {
             // console.log("yes");
@@ -453,14 +295,14 @@ include "../Model/connection.php";
         $(document).on('click', '.decrementBtn', function () {
             totalAmount('-', $(this));
         });
-        
+
         $(document).on('keyup', '.qty1', function () {
             qty1(this)
         });
 
 
 
-     
+
 
 
         $(document).on('click', '#AddToCartBtn', function () {
@@ -479,7 +321,7 @@ include "../Model/connection.php";
                     if (data == '1') {
                         // $('#productListDiv').html(data);
                         alert("successfully Added")
-                    } else if(data == '0'){
+                    } else if (data == '0') {
                         window.location.assign('Login.php')
                     }
 
@@ -488,19 +330,7 @@ include "../Model/connection.php";
         })
 
 
-        // totalAmount(1)
-        // $(document).on("change", "#qty", function () {
-        //     var qty = $(this).val()
-        //     totalAmount(qty)
-
-        // })
-        // $(document).on("change", "#qty", function () {
-        //     var qty = $(this).val()
-        //     totalAmount(qty)
-        // })
-        // $("#moreDetail").on('click', function () {
-        //     $('#exampleModal').modal("show")
-        // })
+        
         // Handle filter button click
         $('li[data-filter]').on('click', function () {
             var filterValue = $(this).data('filter');

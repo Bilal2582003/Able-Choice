@@ -1,12 +1,13 @@
 <?php
 session_start();
 include "../Model/connection.php";
-if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
-    $user_id = $_SESSION['user_id'];
+// if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
     if(isset($_POST['page']) && $_POST['page'] == 'GetAddToCartData'){
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '' ;
         $output='';
         $totalSum =0;
-        $query="SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where c.user_id = '$user_id' ";
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $query="SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where c.user_id = '$user_id' or c.ip_address = '$ipAddress' ";
         $res=mysqli_query($con,$query);
         $rowCount = mysqli_num_rows($res);
         if($rowCount >0){
@@ -52,7 +53,7 @@ if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
         echo 0 .'!'. 0 .'!'. 0;
     }
 
-}else{
-    echo 0 .'!'. 0 .'!'. 0;
-}
+// }else{
+//     echo 0 .'!'. 0 .'!'. 0;
+// }
 ?>
