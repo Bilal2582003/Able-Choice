@@ -303,17 +303,15 @@ include "../Model/connection.php";
 
 
 
-
-
-        $(document).on('click', '#AddToCartBtn', function () {
-            var id = $("#AddToCartId").html();
-            var qty = $("#AddToCartId").parent().find('.qty').val();
+        function addInCartFunction(id, qty,amount, totalAmount){
             $.ajax({
                 url: '../Controllers/_addInCart.php', // Replace with your server endpoint
                 type: 'POST',
                 data: {
                     id: id,
                     qty: qty,
+                    amount: amount,
+                    totalAmount:totalAmount,
                     page: 'AddInAddToCart',
                 },
                 success: function (data) {
@@ -321,12 +319,31 @@ include "../Model/connection.php";
                     if (data == '1') {
                         // $('#productListDiv').html(data);
                         alert("successfully Added")
+                        showCartData()
                     } else if (data == '0') {
-                        window.location.assign('Login.php')
+                        // window.location.assign('Login.php')
                     }
+                    // console.log(data)
 
                 },
             });
+        }
+
+        $(document).on('click', '#AddToCartBtn', function () {
+            var id = $("#AddToCartId").html();
+            var totalAmount = $(".totalAmountTotalAmount").html();
+            var amount = $("#perAmountPerAmount").html();
+            // alert(totalAmount)
+            var qty = $("#AddToCartId").parent().find('.qty').val();
+            addInCartFunction(id, qty,amount, totalAmount);
+        })
+        $(document).on('click', '.modalBuyNowBtn', function () {
+            var id = $("#AddToCartId").html();
+            var totalAmount = $(".totalAmountTotalAmount").html();
+            var amount = $("#perAmountPerAmount").html();
+            var qty = $("#AddToCartId").parent().find('.qty').val();
+            addInCartFunction(id, qty,amount, totalAmount);
+            window.location.assign("CheckOut.php")
         })
 
 

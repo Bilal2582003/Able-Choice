@@ -49,10 +49,10 @@ if (isset($_POST['id'])) {
                                             <h4>This is ' . $row['name'] . '</h4>
                                             <!--div class="row"><span class="col-sm-2 text-center size">Qty: </span> <input
                                                     class="col-sm-4" type="number" value="1" min="1" id="qty">
-                                                    <span class="col-sm-2 text-center size">Total:</span><div class="col-sm-4 " id="totalAmount">' . $row['amount'] . '</div>
+                                                    <span class="col-sm-2 text-center size">Total:</span><div class="col-sm-4  perAmountPerAmount" id="totalAmount">' . $row['amount'] . '</div>
                                             </div-->
-                                            <p class="mb-0 text-secondary" style="text-align:left;display:inline;">Rs: <span class="text-secondary perAmount">' . $row['amount'] . '</span> </p>
-                                            <span >&nbsp&nbsp&nbsp, Total Amount: <span class="totalAmount">' . $row['amount'] . '</span> </span>
+                                            <p class="mb-0 text-secondary" style="text-align:left;display:inline;">Rs: <span class="text-secondary perAmount" id="perAmountPerAmount">' . $row['amount'] . '</span> </p>
+                                            <span >&nbsp&nbsp&nbsp, Total Amount: <span class="totalAmount totalAmountTotalAmount">' . $row['amount'] . '</span> </span>
                                             <br>
 
                                             <div class="row justify-content-flex-start" style="align-items:center">
@@ -72,7 +72,7 @@ if (isset($_POST['id'])) {
                                             </div>
                                         </div>
                                         
-                                                <button class="btn  cartBtn">Buy Now</button>
+                                                <button class="btn  cartBtn  modalBuyNowBtn">Buy Now</button>
                                             
                                         
                                     <br>
