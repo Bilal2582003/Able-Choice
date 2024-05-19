@@ -16,7 +16,7 @@ session_start();
             $queryVal = '"'.$user_id .'" , "'.$ip.'"';
         }else{
             $queryCol = ' ip_address ';
-            $queryVal = $ip;
+            $queryVal = '"'.$ip.'"';
         }
           $query="INSERT INTO card_detail (product_id,qty,per_amount,total_amount,".$queryCol.")VALUE('$id','$qty','$amount','$totalAmount',$queryVal)";
         $res=mysqli_query($con,$query);

@@ -323,7 +323,7 @@ include "../Model/connection.php";
                     } else if (data == '0') {
                         // window.location.assign('Login.php')
                     }
-                    // console.log(data)
+                    console.log(data)
 
                 },
             });
@@ -342,6 +342,7 @@ include "../Model/connection.php";
             var totalAmount = $(".totalAmountTotalAmount").html();
             var amount = $("#perAmountPerAmount").html();
             var qty = $("#AddToCartId").parent().find('.qty').val();
+            // alert(id + ' '+totalAmount+' '+amount+' '+ qty)
             addInCartFunction(id, qty,amount, totalAmount);
             window.location.assign("CheckOut.php")
         })
