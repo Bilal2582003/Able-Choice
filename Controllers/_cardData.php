@@ -7,7 +7,7 @@ include "../Model/connection.php";
         $output='';
         $totalSum =0;
         $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $query="SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where c.user_id = '$user_id' or c.ip_address = '$ipAddress' ";
+        $query="SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where c.user_id = '$user_id' or c.ip_address = '$ipAddress' and c.deleted_at is null";
         $res=mysqli_query($con,$query);
         $rowCount = mysqli_num_rows($res);
         if($rowCount >0){
@@ -29,19 +29,19 @@ include "../Model/connection.php";
                                     <br>
 
                                     <div class="input-group row">
-                                        <button type="button" class="decrementBtnCart col-lg-2 col-sm-2">-</button>
+                                        <button type="button" class="decrementBtnCart col-lg-2 col-sm-2" onclick="updateAddToCart(this,'.$row['id'].')" >-</button>
                                         <input type="text" style="border:none;text-align:center"
                                             class="qty qty2 col-lg-5 col-sm-5" value="'.$row['qty'].'">
-                                        <button type="button" class="incrementBtnCart col-lg-2 col-sm-2">+</button>
+                                        <button type="button" class="incrementBtnCart col-lg-2 col-sm-2" onclick="updateAddToCart(this,'.$row['id'].')" >+</button>
                                     </div>
 
                                 </div>
 
                             </td>
                             <td>
-                                <a href="../Controller/_cardData.php?id='.$row['id'].'" style="font-size:large" class="btn btn-sm text-danger ">
+                                <button onclick="deleteCartItem(this,'.$row['id'].')" style="font-size:large" class="btn btn-sm text-danger ">
                                     <i class="fa fa-trash"></i>
-                                </a>
+                                </button>
                             </td>
                         </tr>';
             }
@@ -49,8 +49,22 @@ include "../Model/connection.php";
         }else{
             echo 0 .'!'. 0 .'!'. 0;
         }
-    }else{
-        echo 0 .'!'. 0 .'!'. 0;
+    }
+
+    if(isset($_POST['page']) && $_POST['page'] == 'updateAddToCartValue' && $_POST['page'] != 'deleteCartItem'){
+        $id = $_POST['id'];
+        $perAmount = $_POST['perAmount'];
+        $totalAmount = $_POST['totalAmount'];
+        $qty = $_POST['qty'];
+        $query="UPDATE card_detail set per_amount = '$perAmount' , total_amount = '$totalAmount', qty='$qty' where id = '$id' ";
+        $res=mysqli_query($con,$query);
+        echo 1;
+    }
+    if(isset($_POST['page']) && $_POST['page'] == 'deleteCartItem' && $_POST['page'] != 'updateAddToCartValue' ){
+        $id = $_POST['id'];
+        $query="UPDATE card_detail SET deleted_at = NOW() where id = '$id' ";
+        $res=mysqli_query($con,$query);
+        echo 1;
     }
 
 // }else{

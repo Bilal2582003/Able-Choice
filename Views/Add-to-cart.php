@@ -82,10 +82,12 @@
                                     <br>
 
                                     <div class="input-group row">
-                                        <button type="button" class="decrementBtnCart col-lg-2 col-sm-2 col-md-2">-</button>
+                                        <button type="button" class="decrementBtnCart col-lg-2 col-sm-2 col-md-2"
+                                            onclick="updateAddToCart()">-</button>
                                         <input type="text" style="border:none;text-align:center"
                                             class="qty qty2 col-lg-5 col-sm-5 col-md-5" value="1">
-                                        <button type="button" class="incrementBtnCart col-lg-2 col-sm-2 col-md-2">+</button>
+                                        <button type="button" class="incrementBtnCart col-lg-2 col-sm-2 col-md-2"
+                                            onclick="updateAddToCart()">+</button>
                                     </div>
 
                                 </div>
@@ -106,7 +108,7 @@
                 </div>
             </div>
             <div class="modal-footer border-top-0 ">
-                <button type="button" class="cartBtn"><a href="Checkut.php">CHECK OUT</a></button>
+                <button type="button" class="cartBtn"><a href="CheckOut.php">CHECK OUT</a></button>
                 <!-- <button type="button" class="cartBtn">Pay Now</button> -->
 
                 <button type="button" class="cartBtn" onclick="closeModal('cartModal')">CONTINUE SHOPING</button>
@@ -150,30 +152,85 @@
         totalAmountElem.html(total.toFixed(2));
         console.log(totalAmountElem.html())
     }
-    function showCartData(){
+    function showCartData() {
         $.ajax({
-                url: '../Controllers/_cardData.php', // Replace with your server endpoint
-                type: 'POST',
-                data: {
-                    page: 'GetAddToCartData',
-                },
-                success: function (data) {
-                    data = data.split('!')
-                    var sum = data[0]
-                    var output = data[1]
-                    var rowCount = data[2]
-                    if(output != 0){
-                        $('#AddToCardTableData').html(output)
-                    }else{
-                        $('#AddToCardTableData').html('')
-                    }
-                    $("#totalSum").html(sum)
-                    $("#addToCardIconValue").html(rowCount);
+            url: '../Controllers/_cardData.php', // Replace with your server endpoint
+            type: 'POST',
+            data: {
+                page: 'GetAddToCartData',
+            },
+            success: function (data) {
+                data = data.split('!')
+                var sum = data[0]
+                var output = data[1]
+                var rowCount = data[2]
+                if (output != 0) {
+                    $('#AddToCardTableData').html(output)
+                } else {
+                    $('#AddToCardTableData').html('')
                 }
-            
+                $("#totalSum").html(sum)
+                $("#addToCardIconValue").html(rowCount);
+            }
+
         })
     }
     showCartData();
+
+    function updateAddToCart(element, id) {
+        // Show the loader
+
+        $(document).ready(function () {
+            setTimeout(() => {
+                // Traverse up to the grandparent element of the clicked button
+                var parent = $(element).parent().parent();
+
+                // Find the elements by class name within the parent
+                var perAmount = parent.find('.perAmount').html();
+                var qty = parent.find('.qty2').val();
+                var totalAmount = parent.find('.totalAmount').html();
+
+                // Alert the values for debugging purposes
+                // alert('ID: ' + id + ' Per Amount: ' + perAmount + ' Total Amount: ' + totalAmount + ' Quantity: ' + qty);
+                $.ajax({
+                    url: '../Controllers/_cardData.php', // Replace with your server endpoint
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        perAmount: perAmount,
+                        totalAmount: totalAmount,
+                        qty: qty,
+                        page: 'updateAddToCartValue',
+                    },
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+
+            }, 1000)
+        })
+    }
+
+    function deleteCartItem(element,id){
+        $(document).ready(function(){
+            var tr = $(element).closest('tr')
+            tr.css('display','none')
+            var cartCount = $("#addToCardIconValue")
+            cartCount.html( parseInt(cartCount.html()) - 1 )
+            $.ajax({
+                    url: '../Controllers/_cardData.php', // Replace with your server endpoint
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        page: 'deleteCartItem',
+                    },
+                    success:function(res){
+                        console.log(res)
+                    }
+                })
+        })
+    }
+
     $(document).ready(function () {
         $(document).on('click', '.incrementBtnCart', function () {
             console.log("yes");
@@ -192,7 +249,7 @@
             var parent = $(element).parent().find(".decrementBtnCart");
             console.log($(element).val())
             // if( $(element).val() ){
-                totalAmountCart('*', parent);
+            totalAmountCart('*', parent);
             // }
         }
 
