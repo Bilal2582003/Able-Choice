@@ -609,8 +609,8 @@ include "../Model/connection.php";
 
     .order div:not(.qty) {
         width: 100%;
-        border-bottom: 1px solid #DDDDDD;
-        padding: 20px 0;
+        /* border-bottom: 1px solid #DDDDDD; */
+        padding: 20px 10px;
     }
 
     .order a {
@@ -697,7 +697,36 @@ include "../Model/connection.php";
         line-height: 40px;
         color: #000;
     }
+
+    .table-image {
+
+        thead {
+
+            td,
+            th {
+                border: 0;
+                color: #666;
+                font-size: 0.8rem;
+            }
+        }
+
+        td,
+        th {
+            vertical-align: middle;
+            text-align: center;
+
+            &.qty {
+                max-width: 2rem;
+            }
+        }
+    }
+
+    .price {
+        margin-left: 1rem;
+    }
 </style>
+
+
 
 <body style="width:100%;padding-top:1px">
 
@@ -815,22 +844,22 @@ include "../Model/connection.php";
                     <div class="row">
                         <div class="col-sm-6">
 
-                        
-                        <label for="province">Province</label>
-                        <select name="province" id="province" required>
-                            <option value="">Please select a province</option>
-                            <option value="ab">Alberta</option>
-                            <option value="bc">British Columbia</option>
-                            <option value="mb">Manitoba</option>
-                            <option value="nb">New Brunswick</option>
-                            <option value="nl">Newfoundland and Labrador</option>
-                            <option value="ns">Nova Socia</option>
-                            <option value="on">Ontario</option>
-                            <option value="pe">Prince Edward Island</option>
-                            <option value="qc">Quebec</option>
-                            <option value="sk">Saskatchewan</option>
-                            <option value="not-canada">Not Canada</option>
-                        </select>
+
+                            <label for="province">Province</label>
+                            <select name="province" id="province" required>
+                                <option value="">Please select a province</option>
+                                <option value="ab">Alberta</option>
+                                <option value="bc">British Columbia</option>
+                                <option value="mb">Manitoba</option>
+                                <option value="nb">New Brunswick</option>
+                                <option value="nl">Newfoundland and Labrador</option>
+                                <option value="ns">Nova Socia</option>
+                                <option value="on">Ontario</option>
+                                <option value="pe">Prince Edward Island</option>
+                                <option value="qc">Quebec</option>
+                                <option value="sk">Saskatchewan</option>
+                                <option value="not-canada">Not Canada</option>
+                            </select>
                         </div>
                         <div class="col-sm-6">
                             <label for="postcode">Postcode</label>
@@ -855,32 +884,89 @@ include "../Model/connection.php";
 
                             <label for="notes" class="notes">Order Notes</label>
                             <textarea name="notes" id="notes"
-                            placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                            
+                                placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-5 col order">
                     <h3 class="topborder"><span>Your Order</span></h3>
-                    <div class="row">
+                    <!-- <div class="row">
                         <h4 class="inline">Product</h4>
                         <h4 class="inline alignright">Total</h4>
-                    </div>
-                    <div>
-                        <p class="prod-description inline">Nice Dress
+                    </div> -->
+                    <div style="max-height:400px; max-width:100%;overflow-y:auto">
+                        <table class="table table-image">
+
+
+                            <?php
+                            $totalAmount = 0;
+                            // session_start();
+                            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+                            $ipAddress = $_SERVER['REMOTE_ADDR'];
+                            $query = "SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where c.user_id = '$user_id' or c.ip_address = '$ipAddress' and c.deleted_at is null";
+
+                            $res = mysqli_query($con, $query);
+                            if (mysqli_num_rows($res) > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $totalAmount += $row['total_amount'];
+                                    echo '<tr rowspan="2">
+                                <td style="display:none">' . $row['id'] . '</td>
+                                           
+                                            <td class="w-40">
+                                                <img src="../Assets/Images/Products/' . $row['img'] . '"
+                                                    class="img-fluid img-thumbnail" alt="Sheep">
+                                            </td>
+                                            <td colspan="5">
+                                                <div class="row">
+                                                    <p class="mb-0 " style="text-align:left">' . $row['p_name'] . '</p>
+                                                    <p class="mb-0 text-secondary " style="text-align:left">Rs: <span
+                                                            class="text-secondary perAmount">' . $row['per_amount'] . '</span></p>
+                                                    <p class=" totalAmount" style="display:none">' . $row['total_amount'] . '</p>
+                                                    <br>
+                
+                                                    <div class="input-group row">
+                                                        <button type="button" class="decrementBtnCart col-lg-2 col-sm-2" onclick="updateAddToCart(this,' . $row['id'] . ')" >-</button>
+                                                        <input type="text" style="border:none;text-align:center"
+                                                            class="qty qty2 col-lg-5 col-sm-5" value="' . $row['qty'] . '">
+                                                        <button type="button" class="incrementBtnCart col-lg-2 col-sm-2" onclick="updateAddToCart(this,' . $row['id'] . ')" >+</button>
+                                                    </div>
+                
+                                                </div>
+                
+                                            </td>
+                                            <td>
+                                                <button onclick="deleteCartItem(this,' . $row['id'] . ')" style="font-size:large" class="btn btn-sm text-danger ">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>';
+                                }
+                            }
+                            ?>
+                            <!-- <p class="prod-description inline">Nice Dress
                         <div class="qty inline"><span class="smalltxt">x</span> 1</div>
-                        </p>
+                        </p> -->
+
+                        </table>
                     </div>
-                    <div>
-                        <h5>Cart Subtotal</h5>
+                    <div class="row">
+                        <h5 style="width:50%">Cart Subtotal</h5>
+                        <p style="width:50%;text-align:right">Rs:<span id="totalSum"><?php echo $totalAmount; ?></span></p>
                     </div>
-                    <div>
-                        <h5 class="inline difwidth">Shipping and Handling</h5>
+                    <div class="row">
+                        <h5 style="width:50%">Shipping Cost</h5>
+                        <p style="width:50%;text-align:right">Rs:<span id="shipTotal">200</span></p>
+                    </div>
+                    <div class="row">
+                        <h5 style="width:50%">Order's Total </h5>
+                        <p style="width:50%;text-align:right">Rs:<span id="netAmount"></span></p>
+                    </div>
+                    <!-- <div>
+
                         <p class="inline alignright center">Free Shipping</p>
-                    </div>
-                    <div>
-                        <h5>Order Total</h5>
-                    </div>
+                    </div> -->
+                    
 
                     <div>
                         <h3 class="topborder"><span>Payment Method</span></h3>
@@ -911,6 +997,12 @@ include "../Model/connection.php";
         </div>
     </div>
     <script>
+
+        <?php
+        include "../Assets/Script/addTocardFunc.js";
+        ?>
+
+
         function nextTab(tabIndex) {
             var sections = document.querySelectorAll('.checkout-form section');
             sections.forEach(function (section, index) {
@@ -930,4 +1022,13 @@ include "../Model/connection.php";
                 }
             });
         }
+        setTimeout(() => {
+            setNetAmount()
+        }, 1000);
+        function setNetAmount() {
+            var a =document.getElementById("totalSum").innerHTML
+            var b =document.getElementById("shipTotal").innerHTML
+            document.getElementById("netAmount").innerHTML = parseInt(a)  + parseInt(b)
+        }
+       
     </script>
