@@ -48,9 +48,9 @@
 
 <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-full-height" style="height:min-content !important"
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-full-height" style="height: min-content"
         role="document">
-        <div class="modal-content" style="height:90% !important">
+        <div class="modal-content" style="height:80% !important">
             <div class="modal-header border-bottom-0 bg-dark">
                 <h5 class="modal-title text-warning" id="exampleModalLabel">
                     Your Shopping Cart
@@ -59,7 +59,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body h-100" style="overflow-y:scroll">
+            <div class="modal-body " style="height: 400px !important;">
+            <div style="height:70% ;overflow-y:scroll">
                 <table class="table table-image">
                     <thead>
                         <tr>
@@ -101,7 +102,7 @@
                         </tr>
                     </tbody>
                 </table>
-
+                </div>
                 <hr>
                 <div class="d-flex justify-content-end">
                     <h5>Total: <span class="price text-success" id="totalSum">89$</span></h5>

@@ -47,6 +47,7 @@ function totalAmountCart(action, data) {
   }
 
 }
+
 function showCartData() {
   $.ajax({
     url: "../Controllers/_cardData.php", // Replace with your server endpoint
