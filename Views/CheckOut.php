@@ -845,20 +845,19 @@ include "../Model/connection.php";
                         <div class="col-sm-6">
 
 
-                            <label for="province">Province</label>
-                            <select name="province" id="province" required>
-                                <option value="">Please select a province</option>
-                                <option value="ab">Alberta</option>
-                                <option value="bc">British Columbia</option>
-                                <option value="mb">Manitoba</option>
-                                <option value="nb">New Brunswick</option>
-                                <option value="nl">Newfoundland and Labrador</option>
-                                <option value="ns">Nova Socia</option>
-                                <option value="on">Ontario</option>
-                                <option value="pe">Prince Edward Island</option>
-                                <option value="qc">Quebec</option>
-                                <option value="sk">Saskatchewan</option>
-                                <option value="not-canada">Not Canada</option>
+                            <label for="City">City</label>
+                            <select name="City" id="City" required>
+                                <option value="">Please select a City</option>
+                                <option value="ab">KARACHI</option>
+                                <option value="bc">LAHORE</option>
+                                <option value="mb">ISALAMABAD</option>
+                                <option value="nb">MURAY</option>
+                                <option value="nl">SUKKUR</option>
+                                <option value="ns">Nawabshad
+</option>
+                                <option value="on">Hyderabad</option>
+                                <option value="pe">KPK</option>
+                                <option value="not-canada">OTHER</option>
                             </select>
                         </div>
                         <div class="col-sm-6">
@@ -952,7 +951,8 @@ include "../Model/connection.php";
                     </div>
                     <div class="row">
                         <h5 style="width:50%">Cart Subtotal</h5>
-                        <p style="width:50%;text-align:right">Rs:<span id="totalSum"><?php echo $totalAmount; ?></span></p>
+                        <p style="width:50%;text-align:right">Rs:<span id="totalSum"><?php echo $totalAmount; ?></span>
+                        </p>
                     </div>
                     <div class="row">
                         <h5 style="width:50%">Shipping Cost</h5>
@@ -966,21 +966,20 @@ include "../Model/connection.php";
 
                         <p class="inline alignright center">Free Shipping</p>
                     </div> -->
-                    
+
 
                     <div>
                         <h3 class="topborder"><span>Payment Method</span></h3>
                         <input type="radio" value="banktransfer" name="payment" checked>
-                        <p>Direct Bank Transfer</p>
+                        <p>Cash On Delivery (COD)</p>
                         <p class="padleft">
-                            Make your payment directly into our bank account. Please use your Order ID as the payment
-                            reference. Your order won't be shipped until the funds have cleared in our account.
+
                         </p>
                     </div>
 
-                    <div><input type="radio" value="cheque" name="payment">
+                    <!-- <div><input type="radio" value="cheque" name="payment">
                         <p>Cheque Payment</p>
-                    </div>
+                    </div> -->
                     <div>
                         <input type="radio" value="paypal" name="payment">
                         <p>Paypal</p>
@@ -989,7 +988,7 @@ include "../Model/connection.php";
                             <img src="images/cards.jpg" alt="Visa, Mastercard, Maestro and Amex Credit Cards"
                                 class="cards">
                         </fieldset>
-                        <a href="#" class="padleft">What is Paypal?</a>
+                        <!-- <a href="#" class="padleft">What is Paypal?</a> -->
                     </div>
                     <input type="submit" name="submit" value="Place Order" class="redbutton">
                 </div>
@@ -1025,10 +1024,10 @@ include "../Model/connection.php";
         setTimeout(() => {
             setNetAmount()
         }, 1000);
-        function setNetAmount() {
+         function se tNetAmount() {
             var a =document.getElementById("totalSum").innerHTML
             var b =document.getElementById("shipTotal").innerHTML
-            document.getElementById("netAmount").innerHTML = parseInt(a)  + parseInt(b)
+     document.getElementById("netAmount").innerHTML = parseInt(a)  + parseInt(b)
         }
        
     </script>

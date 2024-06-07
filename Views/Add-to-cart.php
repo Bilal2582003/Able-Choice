@@ -109,7 +109,8 @@
                 </div>
             </div>
             <div class="modal-footer border-top-0 ">
-                <button type="button" class="cartBtn"><a href="CheckOut.php">CHECK OUT</a></button>
+             <button type="button" class="cartBtn" id="goToChkOutBtn"><a >CHECK OUT </a></button>
+            
                 <!-- <button type="button" class="cartBtn">Pay Now</button> -->
 
                 <button type="button" class="cartBtn" onclick="closeModal('cartModal')">CONTINUE SHOPING</button>
@@ -123,8 +124,10 @@
 include "../Assets/Script/addTocardFunc.js";
 ?>
 
-
-    // function totalAmountCart(action, data) {
+$("#goToChkOutBtn").on("click", function() {
+   window.location.assign("CheckOut.php")
+});
+ // function totalAmountCart(action, data) {
     //     var parent = $(data).parent();
     //     var qty = $(parent).find('.qty');
 
