@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../Assets/Style/checkOut.css">
 <?php
+session_start();
 $page = "checkOut";
 include "Master/headLinks.php";
 include "Master/footerLink.php";
@@ -771,9 +772,9 @@ include "../Model/connection.php";
         <div class="row">
             <div class="col-12 col">
                 <div class="info-bar">
-                    <p>
+                    <p><a style="cursor:pointer" href="Login.php">
                         <i class="fa fa-info"></i>
-                        Returning customer? <a href="#">Click here to login</a>
+                        Returning customer? Click here to login</a>
                     </p>
                 </div>
                 <p>
@@ -820,59 +821,78 @@ include "../Model/connection.php";
             <form method="get">
                 <div class="col-7 col">
                     <h3 class="topborder"><span>Billing Details</span></h3>
-                    <label for="country">Country</label>
+                    <!-- <label for="country">Country</label>
                     <select name="country" id="country" required>
                         <option value="">Please select a country</option>
                         <option value="Canada">Canada</option>
                         <option value="Not Canada">Not Canada</option>
-                    </select>
+                    </select> -->
+
+                    <?php
+                   $name = '';
+                   $email = '';
+                   $phone = '';
+                   $address_address = '';
+                   $city = '';
+                   $state = '';
+                   $postal_code = '';
+                   $country = '';
+                    if(isset($_SESSION['user_id'])){
+                        $user_id= $_SESSION['user_id'] ;
+                        $query="SELECT user.*,address.address as address_address, address.city as city, address.state as state, address.postal_code as postal_code,address.country as country from user join address on address.user_id = user.id where user.id = '$user_id' and user.deleted_at is null";
+                        $res=mysqli_query($con,$query);
+                        if(mysqli_num_rows($res) > 0){
+                            $row = mysqli_fetch_assoc($res);
+                            $name = $row['name'];
+                            $email = $row['email'];
+                            $phone = $row['phone'];
+                            $address_address = $row['address_address'];
+                            $city = $row['city'];
+                            $state = $row['state'];
+                            $postal_code = $row['postal_code'];
+                            $country = $row['country'];
+                        }  
+                    }
+                    
+                    ?>
+
+                    
                     <div class="width50 padright">
                         <label for="fname">First Name</label>
-                        <input type="text" name="fname" id="fname" required>
+                        <input type="text" name="fname" value="<?php echo $name ?>" id="fname" required>
                     </div>
                     <div class="width50">
-                        <label for="lname">Last Name</label>
-                        <input type="text" name="lname" id="lname" required>
+                        <label for="lname">Email</label>
+                        <input type="text" name="email" id="email" value="<?php echo $email ?>" required>
                     </div>
-                    <label for="company">Company Name</label>
-                    <input type="text" name="company" id="company" required>
+                    
                     <label for="address">Address</label>
-                    <input type="text" name="address" id="address" required>
+                    <input type="text" name="address" value="<?php echo $address_address ?>" id="address" required>
                     <input type="text" name="address" id="address2" placeholder="Optional">
-                    <label for="city">Town / City</label>
-                    <input type="text" name="city" id="city" required>
+                    <label for="city">Country</label>
+                    <select name="country" id="country" required>
+                                <option value="pak">Pakistan</option>
+                            </select>
+                  <label for="state">State Name</label>
+                    <input type="text" value="<?php echo $state ?>" name="state" id="state" required>
                     <div class="row">
                         <div class="col-sm-6">
-
-
                             <label for="City">City</label>
-                            <select name="City" id="City" required>
-                                <option value="">Please select a City</option>
-                                <option value="ab">KARACHI</option>
-                                <option value="bc">LAHORE</option>
-                                <option value="mb">ISALAMABAD</option>
-                                <option value="nb">MURAY</option>
-                                <option value="nl">SUKKUR</option>
-                                <option value="ns">Nawabshad
-</option>
-                                <option value="on">Hyderabad</option>
-                                <option value="pe">KPK</option>
-                                <option value="not-canada">OTHER</option>
-                            </select>
+                            <input type="text" name="city" value="<?php echo $city ?>" id="city" required>
                         </div>
                         <div class="col-sm-6">
                             <label for="postcode">Postcode</label>
-                            <input type="text" name="postcode" id="postcode" placeholder="Postcode / Zip" required>
+                            <input type="text" name="postcode" value="<?php echo $postal_code ?>" id="postcode" placeholder="Postcode / Zip" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <label for="email">Email Address</label>
-                            <input type="text" name="email" id="email" required>
+                            <label for="phone1">Phone 1</label>
+                            <input type="text" name="phone1" value="<?php echo $phone ?>" id="phone1" required>
                         </div>
                         <div class="col-sm-6">
-                            <label for="tel">Phone</label>
-                            <input type="text" name="tel" id="tel" required>
+                            <label for="phone2">Phone 2</label>
+                            <input type="text" name="phone2" id="phone2" required>
                         </div>
                     </div>
 
@@ -1024,7 +1044,7 @@ include "../Model/connection.php";
         setTimeout(() => {
             setNetAmount()
         }, 1000);
-         function se tNetAmount() {
+         function setNetAmount() {
             var a =document.getElementById("totalSum").innerHTML
             var b =document.getElementById("shipTotal").innerHTML
      document.getElementById("netAmount").innerHTML = parseInt(a)  + parseInt(b)
