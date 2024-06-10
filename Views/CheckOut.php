@@ -32,7 +32,8 @@ include "../Model/connection.php";
     a,
     abbr,
     acronym,
-    address,
+    address2,
+    address2,
     big,
     cite,
     code,
@@ -818,7 +819,7 @@ include "../Model/connection.php";
                 </div>
             </div> -->
         <div class="row">
-            <form method="get">
+            <form method="post" action="../Controllers/_placeOrder.php">
                 <div class="col-7 col">
                     <h3 class="topborder"><span>Billing Details</span></h3>
                     <!-- <label for="country">Country</label>
@@ -859,7 +860,7 @@ include "../Model/connection.php";
                     
                     <div class="width50 padright">
                         <label for="fname">First Name</label>
-                        <input type="text" name="fname" value="<?php echo $name ?>" id="fname" required>
+                        <input type="text" name="fname" required value="<?php echo $name ?>" id="fname" required>
                     </div>
                     <div class="width50">
                         <label for="lname">Email</label>
@@ -892,7 +893,7 @@ include "../Model/connection.php";
                         </div>
                         <div class="col-sm-6">
                             <label for="phone2">Phone 2</label>
-                            <input type="text" name="phone2" id="phone2" required>
+                            <input type="text" name="phone2" id="phone2" >
                         </div>
                     </div>
 
@@ -990,7 +991,7 @@ include "../Model/connection.php";
 
                     <div>
                         <h3 class="topborder"><span>Payment Method</span></h3>
-                        <input type="radio" value="banktransfer" name="payment" checked>
+                        <input type="radio" required value="cashondeleivery" class="payment_mode" name="payment" checked>
                         <p>Cash On Delivery (COD)</p>
                         <p class="padleft">
 
@@ -1001,16 +1002,12 @@ include "../Model/connection.php";
                         <p>Cheque Payment</p>
                     </div> -->
                     <div>
-                        <input type="radio" value="paypal" name="payment">
-                        <p>Paypal</p>
-                        <fieldset class="paymenttypes">
-                            <legend><img src="images/pay-pal.jpg" alt="PayPal Logo" class="paypal"></legend>
-                            <img src="images/cards.jpg" alt="Visa, Mastercard, Maestro and Amex Credit Cards"
-                                class="cards">
-                        </fieldset>
+                        <input type="radio" required value="banktransfer" class="payment_mode" name="payment">
+                        <p>Bank Transfer</p>
+                       
                         <!-- <a href="#" class="padleft">What is Paypal?</a> -->
                     </div>
-                    <input type="submit" name="submit" value="Place Order" class="redbutton">
+                    <input type="submit" name="submit"  value="Place Order" class="redbutton">
                 </div>
             </form>
         </div>
@@ -1050,4 +1047,34 @@ include "../Model/connection.php";
      document.getElementById("netAmount").innerHTML = parseInt(a)  + parseInt(b)
         }
        
+        function placeOrder(){
+            var name =  document.getElementById('fname').value;
+            var email =  document.getElementById('email').value;
+            var address =  document.getElementById('address').value;
+            var address2 =  document.getElementById('address2').value;
+            var country =  document.getElementById('country').value;
+            var state =  document.getElementById('state').value;
+            var city =  document.getElementById('city').value;
+            var postcode =  document.getElementById('postcode').value;
+            var phone1 =  document.getElementById('phone1').value;
+            var phone2 =  document.getElementById('phone2').value;
+            var notes =  document.getElementById('notes').value;
+            var shipTotal =  document.getElementById('shipTotal').value;
+            var payment_mode = '';
+            $(".payment_mode").each(function(){
+                if($(this).prop('checked') == true){
+                    payment_mode = $(this).val()
+                }
+            })
+
+            if(name != '' && email != '' && address != '' && address != '' && address2 != '' && country != '' && state != '' && city != '' && postcode != '' && phone1 != '' && payment_mode != ''){
+                $.ajax({
+
+                })
+            }
+
+        }
+
+        
+
     </script>

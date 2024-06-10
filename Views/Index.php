@@ -8,14 +8,49 @@ include "../Model/connection.php";
   .inImage{
     height:313px
   }
+  #hero {
+        position: relative;
+        width: 100%;
+        height:100vh;
+        overflow: hidden;
+    }
+
+    #hero .info {
+        z-index: 10;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+   /* #hero .carousel-item {
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    @media (max-width: 768px) {
+        #hero .info .container {
+            padding: 0 15px;
+        }
+
+        #hero .carousel-item {
+            height: auto;
+        }
+    }
+
+    .btn-get-started {
+        font-size: 16px;
+        padding: 10px 30px;
+    } */
 </style>
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero">
+  <section id="hero" class="hero" >
  
-    <div class="info d-flex align-items-center">
+    <div class="info d-flex align-items-center" style="width:80%">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-6 text-center">
+          <div class="col-lg-12 text-center " style="min-height:fit-content !important">
             <h2 data-aos="fade-down">Welcome to <span>Able Coice</span></h2>
             <p data-aos="fade-up">Our Company name is <strong>Al-Sheikh Enterprise</strong>. We are providing our service till 25 years. We have <b>one of best quality products</b>.</p>
             <a data-aos="fade-up" data-aos-delay="200" href="Product.php" class="btn-get-started">See Our Products</a>

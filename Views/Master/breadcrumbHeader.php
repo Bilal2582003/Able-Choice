@@ -8,6 +8,7 @@
   <title><?php echo $page?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <?php
   include "headLinks.php";
