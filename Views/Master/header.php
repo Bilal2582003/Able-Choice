@@ -48,6 +48,9 @@ include "breadcrumbHeader.php"; ?>
           <li title="Contact"><a href="Contact.php" <?php if ($page == 'Contact') {
             echo "class='active'";
           } ?>>Contact</a></li>
+           <li title="Order"><a href="Orders.php" <?php if ($page == 'Order') {
+            echo "class='active'";
+          } ?>>Order</a></li>
           <li onclick="openModal(`cartModal`, 0)" ><a>
               <!-- <div class="containerAddCArt"> -->
                 <!-- <button type="button" class="btn" style="color:gold;" > -->
