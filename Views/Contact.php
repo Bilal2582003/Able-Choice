@@ -1,5 +1,7 @@
 <?php
 $page="Contact";
+session_start();
+
 include "Master/header.php";
 ?>
 

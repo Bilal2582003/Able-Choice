@@ -1,5 +1,6 @@
 <?php
 $page="About";
+session_start();
 include "Master/header.php";
 ?>
 

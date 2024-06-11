@@ -1,9 +1,11 @@
 <?php
-$page = "Order";
-session_start();
 
+session_start();
+include("session.php");
+
+$page = "Order";
 include "Master/header.php";
-include '../Model/connection.php';
+include '../../Model/connection.php';
 
 ?>
 <style>
@@ -136,7 +138,7 @@ include "Master/footer.php";
 
         function showData(action) {
             $.ajax({
-                url: '../Controllers/_orders.php', // Replace with your server endpoint
+                url: '../../Controllers/Admin/_orders.php', // Replace with your server endpoint
                 type: 'POST',
                 data: {
                     forTable: 'table',
@@ -166,7 +168,7 @@ include "Master/footer.php";
 
             // Send AJAX request to update the status
             $.ajax({
-                url: '../Controllers/_orders.php',
+                url: '../../Controllers/Admin/_orders.php',
                 method: 'POST',
                 data: {
                     id: id,
@@ -189,7 +191,7 @@ include "Master/footer.php";
 
         function showCounter() {
             $.ajax({
-                url: '../Controllers/_orders.php',
+                url: '../../Controllers/Admin/_orders.php',
                 method: 'POST',
                 data: {
                     action: 'counter'
@@ -205,3 +207,4 @@ include "Master/footer.php";
         }
     })
 </script>
+

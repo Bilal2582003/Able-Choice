@@ -1,6 +1,5 @@
 
 <?php
-// session_start();
 include "breadcrumbHeader.php"; ?>
 
 <body>
@@ -22,9 +21,6 @@ include "breadcrumbHeader.php"; ?>
           } ?>>Home</a></li>
 
 
-          <li title="Product"><a href="Product.php" <?php if ($page == 'Product') {
-            echo "class='active'";
-          } ?>>Product</a></li>
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
@@ -42,25 +38,6 @@ include "breadcrumbHeader.php"; ?>
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li> -->
-          <li title="About"><a href="About.php" <?php if ($page == 'About') {
-            echo "class='active'";
-          } ?>>About</a></li>
-          <li title="Contact"><a href="Contact.php" <?php if ($page == 'Contact') {
-            echo "class='active'";
-          } ?>>Contact</a></li>
-           <li title="Order"><a href="Orders.php" <?php if ($page == 'Order') {
-            echo "class='active'";
-          } ?>>Order</a></li>
-          <li onclick="openModal(`cartModal`, 0)" ><a>
-              <!-- <div class="containerAddCArt"> -->
-                <!-- <button type="button" class="btn" style="color:gold;" > -->
-                  <i class="fa fa-shopping-cart btn text-warning" style="padding:10px;margin-left:0px; font-size:18px;font-weight:bolder"   aria-hidden="true" id="addToCardIcon"></i>
-                  <span class="badge" id='addToCardIconValue'> 5 </span>
-                  <!-- <span id="addToCardIconValue" style="position:absolute;top:-10px;right:-10px;background-color:red;color:white;border-radius:50%;padding:5px;">0</span>  -->
-                <!-- </button> -->
-              <!-- </div> -->
-
-            </a></li>
             <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-user btn text-warning" style="padding:10px;margin-left:0px; font-size:18px;font-weight:bolder" aria-hidden="true"></i>
@@ -79,4 +56,3 @@ include "breadcrumbHeader.php"; ?>
 
     </div>
   </header>
-  <?php include("Add-to-cart.php"); ?>

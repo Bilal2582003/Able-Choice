@@ -1,5 +1,7 @@
 <?php
 $page="Product";
+session_start();
+
 include "Master/header.php";
 ?>
 

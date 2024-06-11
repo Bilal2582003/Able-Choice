@@ -1,5 +1,7 @@
 <?php
 $page="home";
+session_start();
+
 include "Master/header.php";
 include "../Model/connection.php";
 
