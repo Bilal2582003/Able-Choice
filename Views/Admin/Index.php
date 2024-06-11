@@ -117,7 +117,7 @@ include '../../Model/connection.php';
 
 
 </main><!-- End #main -->
-<div id="chkStatus">all</div>
+<div id="chkStatus" style="display:none">all</div>
 <?php
 include "Master/footer.php";
 ?>

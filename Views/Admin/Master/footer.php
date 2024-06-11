@@ -24,15 +24,21 @@
           </div>
 
           <div class="col-lg-4 col-md-6 footer-links">
-            <h4>Main</h4>
+            <h4>Main Pages</h4>
             <ul>
-              <li><a href="Index.php">Home</a></li>
-              <li><a href="About.php">About us</a></li>
-              <li><a href="Contact.php">Contact</a></li>
+              <li><a href="Orders.php">Home</a></li>
+              <li><a href="Profile.php">Profile</a></li>
+              <?php if (isset($_SESSION['user_id'])): ?>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+              <?php else: ?>
+                <li><a href="login.php">Login</a></li>
+              <?php endif; ?>
+              <!-- <li><a href="Contact.php">Contact</a></li> -->
             </ul>
           </div>
 
-          <div class="col-lg-4 col-md-6 footer-links">
+          <!-- <div class="col-lg-4 col-md-6 footer-links">
             <h4>Our Product</h4>
             <ul>
               <li><a href="#">Tables</a></li>
@@ -40,7 +46,7 @@
               <li><a href="#">Health Care</a></li>
               <li><a href="#">Animals</a></li>
             </ul>
-          </div>
+          </div> -->
 
         </div>
       </div>
