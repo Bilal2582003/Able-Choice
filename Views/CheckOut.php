@@ -1,7 +1,10 @@
 <link rel="stylesheet" type="text/css" href="../Assets/Style/checkOut.css">
 <?php
 session_start();
-$page = "checkOut";
+// $local_ip = shell_exec('ipconfig');
+// preg_match('/IPv4 Address.*?: ([^\s]+)/', $local_ip, $matches);
+// echo  (isset($matches[1]) ? $matches[1] : 'Not found');$page = "checkOut";
+// echo "<br>"  .$_SESSION['unique_id'] = bin2hex(random_bytes(16));
 include "Master/headLinks.php";
 include "Master/footerLink.php";
 include "../Model/connection.php";
