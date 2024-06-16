@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include("session.php");
+include ("session.php");
 
 $page = "Order";
 include "Master/header.php";
@@ -9,32 +9,34 @@ include '../../Model/connection.php';
 
 ?>
 <style>
-    th{
+    th {
         background-color: lightgray;
     }
-    tr:nth-child(even){
+
+    tr:nth-child(even) {
         background-color: #f2f2f2;
-        margin:2px;
-        padding:5px;
+        margin: 2px;
+        padding: 5px;
 
     }
-    td, th{
+
+    td,
+    th {
         padding: 10px;
         text-align: center;
     }
+
     .status {
-    width: 100%;
-    margin: 5px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    background-color: #f9f9f9;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-   
-}
+        width: 100%;
+        margin: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
 
-
+    }
 </style>
 <main id="main">
 
@@ -84,28 +86,30 @@ include '../../Model/connection.php';
 
             <div class="row gy-4 mt-1">
                 <div class="col-lg-12 col-md-12">
-                    <div class="info-item" >
-                        <div style="margin:0px auto 0px auto;padding:0px 10px 10px 10px;max-height:500px; overflow-y:auto;width:100%">
+                    <div class="info-item">
+                        <div
+                            style="margin:0px auto 0px auto;padding:0px 10px 10px 10px;max-height:500px; overflow-y:auto;width:100%">
 
-                        
-                        <table width="100%" style="margin:auto">
-                            <thead style="position:sticky;top:0px">
-                                
-                                    <th>ID</th>
+
+                            <table width="100%" style="margin:auto">
+                                <thead style="position:sticky;top:0px">
+
+                                    <th>USER</th>
                                     <th>NAME</th>
                                     <th>IMAGE</th>
                                     <th>QTY</th>
                                     <th>UNIT AMOUNT</th>
                                     <th>TOTAL</th>
-                                    <th>MODE</th>
-                                    
-                                    <th>STATUS</th>
-                                
-                            </thead>
-                            <tbody id="tbody">
+                                    <th>PHONE</th>
 
-                            </tbody>
-                        </table>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
+
+                                </thead>
+                                <tbody id="tbody">
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -118,6 +122,28 @@ include '../../Model/connection.php';
 
 </main><!-- End #main -->
 <div id="chkStatus" style="display:none">all</div>
+
+
+<div class="modal" id="editModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Order Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="update.php" id="edit-form">
+                    <input class="form-control" type="hidden" name="id">
+                    <!-- Input fields for email, first name, last name, and address -->
+                    <!-- ... -->
+                    <button type="button" class="btn btn-primary" id="btnUpdateSubmit">Update</button>
+                    <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 include "Master/footer.php";
 ?>
@@ -197,14 +223,29 @@ include "Master/footer.php";
                     action: 'counter'
                 },
                 success: function (response) {
-                    var data =response.split('!')
+                    var data = response.split('!')
                     document.getElementById("activeCounter").innerHTML = data[0]
-                    document.getElementById("cancelCounter").innerHTML =data[1]
-                    document.getElementById("completedCounter").innerHTML =data[2]
+                    document.getElementById("cancelCounter").innerHTML = data[1]
+                    document.getElementById("completedCounter").innerHTML = data[2]
                 }
             })
 
         }
-    })
-</script>
 
+        
+    })
+    function showOrderDetail(id){
+        $(document).ready(function(){
+            $.ajax({
+                url: '../../Controllers/Admin/_orders.php',
+                method: 'POST',
+                data: {
+                    action: 'editModal'
+                },
+                success: function (response) {
+                  
+                }
+            })
+        })
+    }
+</script>

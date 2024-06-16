@@ -2,36 +2,44 @@
 include '../Model/connection.php';
 session_start();
 if (isset($_POST['action'])) {
-    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
-    $ip_address = $_SERVER['REMOTE_ADDR'];
+    $token= $_SESSION['token'] ;
+    
     if (isset($_POST['forTable'])) {
+
+        if(isset($_SESSION['user_id'])){
+            $user_id= $_SESSION['user_id'] ;
+            $test = " orders.user_id = '$user_id' or orders.ip_address = '$token' ";
+        }else{
+            $test =  " orders.ip_address ='$token'";
+        }
+
         $output = '';
         if ($_POST['action'] === 'active') {
 
             $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
             JOIN product ON order_items.product_id = product.id 
-            WHERE order_items.is_active = 1 and (orders.user_id = '$user_id' or orders.ip_address = '$ip_address')";
+            WHERE order_items.is_active = 1 and ($test)";
         }
         if ($_POST['action'] === 'cancel') {
 
             $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
             JOIN product ON order_items.product_id = product.id 
-            WHERE order_items.is_cancelled = 1 and (orders.user_id = '$user_id' or orders.ip_address = '$ip_address')";
+            WHERE order_items.is_cancelled = 1 and ($test)";
         }
         if ($_POST['action'] === 'completed') {
 
             $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
             JOIN product ON order_items.product_id = product.id 
-            WHERE order_items.is_completed = 1 and (orders.user_id = '$user_id' or orders.ip_address = '$ip_address')";
+            WHERE order_items.is_completed = 1 and ($test)";
         }
         if ($_POST['action'] === 'all') {
 
             $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
-            JOIN product ON order_items.product_id = product.id where orders.user_id = '$user_id' or orders.ip_address = '$ip_address'
+            JOIN product ON order_items.product_id = product.id where $test
             ";
         }
         $res = mysqli_query($con, $sql);
@@ -115,8 +123,14 @@ if (isset($_POST['action'])) {
         $activeCount =0;
         $cancelCount =0;
         $completedCount =0;
+        if(isset($_SESSION['user_id'])){
+            $user_id= $_SESSION['user_id'] ;
+            $test = " orders.user_id = '$user_id' or orders.ip_address = '$token' ";
+        }else{
+            $test =  " orders.ip_address ='$token'";
+        }
         // Count active orders
-        $query = "SELECT COUNT(*) as active_count FROM order_items join orders on order_items.order_id = orders.id WHERE is_active = 1 AND is_cancelled = 0 AND is_completed = 0 and (orders.user_id = '$user_id' or orders.ip_address = '$ip_address')";
+        $query = "SELECT COUNT(*) as active_count FROM order_items join orders on order_items.order_id = orders.id WHERE is_active = 1 AND is_cancelled = 0 AND is_completed = 0 and ($test)";
         $res = mysqli_query($con, $query);
         if(mysqli_num_rows($res) > 0){
             $row = mysqli_fetch_assoc($res);
@@ -124,7 +138,7 @@ if (isset($_POST['action'])) {
         }
         
         // Count cancelled orders
-        $query = "SELECT COUNT(*) as cancel_count FROM order_items join orders on order_items.order_id = orders.id WHERE is_cancelled = 1 AND is_completed = 0 AND is_active = 0 and (orders.user_id = '$user_id' or orders.ip_address = '$ip_address')";
+        $query = "SELECT COUNT(*) as cancel_count FROM order_items join orders on order_items.order_id = orders.id WHERE is_cancelled = 1 AND is_completed = 0 AND is_active = 0 and ($test)";
         $res = mysqli_query($con, $query);
         if(mysqli_num_rows($res) > 0){
         $row = mysqli_fetch_assoc($res);
@@ -132,7 +146,7 @@ if (isset($_POST['action'])) {
         }
         
         // Count completed orders
-        $query = "SELECT COUNT(*) as completed_count FROM order_items join orders on order_items.order_id = orders.id WHERE is_completed = 1 AND is_cancelled = 0 AND is_active = 0 and (orders.user_id = '$user_id' or orders.ip_address = '$ip_address')";
+        $query = "SELECT COUNT(*) as completed_count FROM order_items join orders on order_items.order_id = orders.id WHERE is_completed = 1 AND is_cancelled = 0 AND is_active = 0 and ($test)";
         $res = mysqli_query($con, $query);
         if(mysqli_num_rows($res) > 0){
             $row = mysqli_fetch_assoc($res);

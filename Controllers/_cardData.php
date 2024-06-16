@@ -6,7 +6,7 @@ include "../Model/connection.php";
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '' ;
         $output='';
         $totalSum =0;
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $ipAddress = $_SESSION['token'];
         $query="SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where c.user_id = '$user_id' or c.ip_address = '$ipAddress' and c.deleted_at is null";
         $res=mysqli_query($con,$query);
         $rowCount = mysqli_num_rows($res);

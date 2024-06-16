@@ -7,28 +7,28 @@ if (isset($_POST['action']) && isset($_SESSION['role'])) {
         $output = '';
         if ($_POST['action'] === 'active') {
 
-            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
+            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode,orders.name as name, orders.phone1 as phone1 FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
             JOIN product ON order_items.product_id = product.id 
             WHERE order_items.is_active = 1";
         }
         if ($_POST['action'] === 'cancel') {
 
-            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
+            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode,orders.name as name, orders.phone1 as phone1 FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
             JOIN product ON order_items.product_id = product.id 
             WHERE order_items.is_cancelled = 1";
         }
         if ($_POST['action'] === 'completed') {
 
-            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
+            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode,orders.name as name, orders.phone1 as phone1 FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
             JOIN product ON order_items.product_id = product.id 
             WHERE order_items.is_completed = 1";
         }
         if ($_POST['action'] === 'all') {
 
-            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode FROM order_items 
+            $sql = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode, orders.name as name, orders.phone1 as phone1 FROM order_items 
             JOIN orders ON order_items.order_id = orders.id 
             JOIN product ON order_items.product_id = product.id 
             ";
@@ -69,18 +69,27 @@ if (isset($_POST['action']) && isset($_SESSION['role'])) {
 
                 $output .= '
     <tr>
-    <td>' . $row["id"] . '</td>
+    <td style="display:none">' . $row["id"] . '</td>
+    <td>' . $row["name"] . '</td>
     <td>' . $row["pName"] . '</td>
     <td>  <img width="100%" height="70px" src="../../Assets/Images/Products/' . $row["image"] . '"/></td>
     <td>' . $row["qty"] . '</td>
     <td>' . $row["per_amount"] . '</td>
     <td>' . $row["total_amount"] . '</td>
-    <td>' . $mode . '</td>
+    <td>' . $row['phone1'] . '</td>
     <td>
     <select class="status">
     ' . $option . '
     </select>
     </td>
+    <td>
+     
+                <button class="btn btn-secondary" type="button" onclick="showOrderDetail(' . $row['id'] . ')">
+                  Show Detail
+                </button>
+             
+    </td>
+
     </tr>
     ';
             }
@@ -138,6 +147,14 @@ if (isset($_POST['action']) && isset($_SESSION['role'])) {
         $completedCount = $row['completed_count'];
             }
         echo $activeCount .'!'.$cancelCount.'!'.$completedCount ;
+    }
+    if ($_POST['action'] == 'editModal' && !isset($_POST['forTable'])) {
+        $id = $_POST['id'];
+        $query="SELECT * from order_items as oi join orders o on o.id = oi.order_id join product as p on p.id = oi.product_id where oi.id = '$id' ";
+        $res=mysqli_query($con,$query);
+        if(mysqli_num_rows($res) > 0){
+            $row=mysqli_fetch_assoc($res);
+        }
     }
 }else{
     header("location:../../Views/Admin/Login.php");

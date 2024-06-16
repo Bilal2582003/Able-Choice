@@ -1,7 +1,7 @@
 <?php
 $page = "Order";
 session_start();
-
+// echo $_SESSION['token']; 
 include "Master/header.php";
 include '../Model/connection.php';
 

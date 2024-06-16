@@ -74,8 +74,17 @@ require '../vendor/autoload.php'; // Include Stripe's PHP library
 \Stripe\Stripe::setApiKey('sk_test_51PPoLbECxkP4UAgfPIUKlmoCju2hQBQ8SrJ3h6ZAllZHXGunWhDBF670xkEoSMXOnCn3nhf2AT2Z6L5Rlux0Uppc00OEunD4NB'); // Set your Stripe secret key
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-    $ip_address = $_SERVER['REMOTE_ADDR'];
+    $token = $_SESSION['token'];
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        $queryUser = ' user_id, ';
+        $queryUserVal = '"' . $user_id . '" ,';
+        $test = " user_id = '$user_id' or ip_address = '$token' ";
+    } else {
+        $queryUser = '';
+        $queryUserVal = '';
+        $test = "ip_address ='$token'";
+    }
 
     $fname = mysqli_real_escape_string($con, $_POST['fname']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
@@ -90,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $payment_method = mysqli_real_escape_string($con, $_POST['payment']);
 
     // Calculate total amount
-    $cart_query = "SELECT * FROM card_detail WHERE (user_id = '$user_id' OR ip_address = '$ip_address') AND deleted_at IS NULL";
+    $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
     $cart_res = mysqli_query($con, $cart_query);
     $total_amount = 0;
 
@@ -104,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($payment_method == 'cashondeleivery') {
         // Insert order details into the orders table
-        $order_query = "INSERT INTO orders (user_id, name, email, address, city, state, postcode, country, phone1, phone2, notes, payment_method, total_amount, shipping_cost, net_amount,ip_address, order_date) VALUES ('$user_id', '$fname', '$email', '$address', '$city', '$state', '$postcode', '$country', '$phone1', '$phone2', '$notes', '$payment_method', '$total_amount', '$shipping_cost', '$net_amount','$ip_address', NOW())";
+        $order_query = "INSERT INTO orders ($queryUser name, email, address, city, state, postcode, country, phone1, phone2, notes, payment_method, total_amount, shipping_cost, net_amount,ip_address, order_date) VALUES ($queryUserVal '$fname', '$email', '$address', '$city', '$state', '$postcode', '$country', '$phone1', '$phone2', '$notes', '$payment_method', '$total_amount', '$shipping_cost', '$net_amount','$token', NOW())";
 
         if (mysqli_query($con, $order_query)) {
             $order_id = mysqli_insert_id($con);
@@ -122,16 +131,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Clear the cart for the user
-            $clear_cart_query = "UPDATE card_detail set deleted_at = NOW() WHERE (user_id = '$user_id' OR ip_address = '$ip_address')";
+            $clear_cart_query = "UPDATE card_detail set deleted_at = NOW() WHERE ($test)";
             mysqli_query($con, $clear_cart_query);
 
             // Redirect to a thank you page or order confirmation page
+
+            include ('../smtp/PHPMailerAutoload.php');
+
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $domainName = $_SERVER['HTTP_HOST'];
+            $url = $protocol.$domainName . '/Able%20Choice/Views/Orders.php?order_id=' . $order_id;
+
+            $mail = new PHPMailer(true);
+            $mail->IsSMTP();
+            $mail->SMTPDebug = 0;
+            $mail->SMTPAuth = true;
+            $mail->Host = "smtp.gmail.com";
+            $mail->Port = 587;
+            $mail->SMTPSecure = "tls";
+            $mail->SMTPAuth = true;
+            $mail->Username = "huzaifa2582003@gmail.com";
+            $mail->Password = "grdjmwnxsaecnech";
+            $mail->SetFrom("huzaifa2582003@gmail.com");
+            $mail->AddAddress("huzaifa2582003@gmail.com");
+            $mail->IsHTML(true);
+            $mail->Subject = "Able Choice Order Tracking";
+            $mail->Body = "Thank you for order. <a href='$url'>Track Your Order</a>";
+            if (!$mail->Send()) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+
             header('Location: ../Views/Orders.php?order_id=' . $order_id);
         } else {
             echo "Error: " . $order_query . "<br>" . mysqli_error($con);
         }
     } else if ($payment_method == 'banktransfer') {
-        $_SESSION['user_id'] = $user_id;
         $_SESSION['fname'] = $fname;
         $_SESSION['email'] = $email;
         $_SESSION['address'] = $address;

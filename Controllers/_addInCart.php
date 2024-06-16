@@ -8,7 +8,7 @@ session_start();
         $qty= $_POST['qty'];
         $amount= $_POST['amount'];
         $totalAmount= $_POST['totalAmount'];
-        $ip =$_SERVER['REMOTE_ADDR'];
+        $ip =$_SESSION['token'];
         
         if(isset($_SESSION['user_id'])){
             $user_id= $_SESSION['user_id'] ;

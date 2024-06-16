@@ -1,10 +1,27 @@
 <?php
 $page="home";
 session_start();
-
 include "Master/header.php";
 include "../Model/connection.php";
 
+
+function setToken($con){
+
+  if(!isset($_SESSION['token'])){
+
+    $token =bin2hex(random_bytes(16));
+   echo  $query="SELECT * from card_detail where ip_address = '$token'";
+    $res=mysqli_query($con, $query);
+    if(mysqli_num_rows($res) <= 0){
+      $_SESSION['token'] = $token;
+    }else{
+      setToken($con);
+    }
+
+  }
+
+}
+setToken($con);
 ?>
 <style>
   .inImage{
