@@ -1,5 +1,5 @@
 <?php
-$db="able_choice";
+$db="able-choice";
 $host="localhost";
 $user_name="root";
 $password="";
