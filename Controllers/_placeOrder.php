@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $payment_method = mysqli_real_escape_string($con, $_POST['payment']);
 
     // Calculate total amount
-    $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
+      $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
     $cart_res = mysqli_query($con, $cart_query);
     $total_amount = 0;
 
@@ -111,14 +111,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $shipping_cost = 200;
     $net_amount = $total_amount + $shipping_cost;
 
-    if ($payment_method == 'cashondeleivery') {
+    if ($payment_method == 'cashondelivery') {
         // Insert order details into the orders table
-        $order_query = "INSERT INTO orders ($queryUser name, email, address, city, state, postcode, country, phone1, phone2, notes, payment_method, total_amount, shipping_cost, net_amount,ip_address, order_date) VALUES ($queryUserVal '$fname', '$email', '$address', '$city', '$state', '$postcode', '$country', '$phone1', '$phone2', '$notes', '$payment_method', '$total_amount', '$shipping_cost', '$net_amount','$token', NOW())";
+      $order_query = "INSERT INTO orders ($queryUser name, email, address, city, state, postcode, country, phone1, phone2, notes, payment_method, total_amount, shipping_cost, net_amount,ip_address, order_date) VALUES ($queryUserVal '$fname', '$email', '$address', '$city', '$state', '$postcode', '$country', '$phone1', '$phone2', '$notes', '$payment_method', '$total_amount', '$shipping_cost', '$net_amount','$token', NOW())";
 
         if (mysqli_query($con, $order_query)) {
             $order_id = mysqli_insert_id($con);
 
             // Insert each cart item into order_items table
+          $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
             $cart_res = mysqli_query($con, $cart_query);
             while ($cart_row = mysqli_fetch_assoc($cart_res)) {
                 $product_id = $cart_row['product_id'];
@@ -126,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $per_amount = $cart_row['per_amount'];
                 $total_amount = $cart_row['total_amount'];
 
-                $order_item_query = "INSERT INTO order_items (order_id, product_id, qty, per_amount, total_amount) VALUES ('$order_id', '$product_id', '$qty', '$per_amount', '$total_amount')";
+               $order_item_query = "INSERT INTO order_items (order_id, product_id, qty, per_amount, total_amount) VALUES ('$order_id', '$product_id', '$qty', '$per_amount', '$total_amount')";
                 mysqli_query($con, $order_item_query);
             }
 

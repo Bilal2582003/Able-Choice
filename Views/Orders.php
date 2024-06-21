@@ -7,32 +7,42 @@ include '../Model/connection.php';
 
 ?>
 <style>
-    th{
+    th {
         background-color: lightgray;
     }
-    tr:nth-child(even){
+
+    tr:nth-child(even) {
         background-color: #f2f2f2;
-        margin:2px;
-        padding:5px;
+        margin: 2px;
+        padding: 5px;
 
     }
-    td, th{
+
+    td,
+    th {
         padding: 10px;
         text-align: center;
     }
+
     .status {
-    width: 100%;
-    margin: 5px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    background-color: #f9f9f9;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-   
-}
+        width: 100%;
+        margin: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
 
+    }
 
+    .search-bar {
+        width: 80%;
+    }
+
+    .search-label {
+        font-weight: bold;
+    }
 </style>
 <main id="main">
 
@@ -82,13 +92,32 @@ include '../Model/connection.php';
 
             <div class="row gy-4 mt-1">
                 <div class="col-lg-12 col-md-12">
-                    <div class="info-item" >
-                        <div style="margin:0px auto 0px auto;padding:0px 10px 10px 10px;max-height:500px; overflow-y:auto;width:100%">
+                    <div class="info-item">
 
-                        
-                        <table width="100%" style="margin:auto">
-                            <thead style="position:sticky;top:0px">
-                                
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="offset-1 col-8"
+                                    style="display:flex;justify-content:center;align-items:center">
+                                    <label for="search" class="search-label m-2 ">Search</label>
+                                    <input type="text" id="search" class=" m-2 form-control search-bar"
+                                        placeholder="Type your search here..." />
+                                </div>
+                                <div class="col-2" style="display:flex;align-items:center;">
+                                    <button id="searchBtn" class="btn btn-success">Search</button>
+                                </div>
+                            </div>
+                            <br>
+                            <hr style="width:85%;margin:auto;color:orange;border:1px solid orange">
+                            <br>
+                        </div>
+
+                        <div
+                            style="margin:0px auto 0px auto;padding:0px 10px 10px 10px;max-height:500px; overflow-y:auto;width:100%">
+
+
+                            <table width="100%" style="margin:auto">
+                                <thead style="position:sticky;top:0px">
+
                                     <th>ID</th>
                                     <th>NAME</th>
                                     <th>IMAGE</th>
@@ -96,14 +125,14 @@ include '../Model/connection.php';
                                     <th>UNIT AMOUNT</th>
                                     <th>TOTAL</th>
                                     <th>MODE</th>
-                                    
-                                    <th>STATUS</th>
-                                
-                            </thead>
-                            <tbody id="tbody">
 
-                            </tbody>
-                        </table>
+                                    <th>STATUS</th>
+
+                                </thead>
+                                <tbody id="tbody">
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -133,7 +162,7 @@ include "Master/footer.php";
             showData('completed');
             $("#chkStatus").html('completed')
         })
-
+        showCounter();
         function showData(action) {
             $.ajax({
                 url: '../Controllers/_orders.php', // Replace with your server endpoint
@@ -154,8 +183,7 @@ include "Master/footer.php";
                 }
             })
         }
-        showData('all')
-        showCounter();
+       
 
 
         $(document).on("change", ".status", function () {
@@ -195,13 +223,69 @@ include "Master/footer.php";
                     action: 'counter'
                 },
                 success: function (response) {
-                    var data =response.split('!')
+                    console.log(response)
+                    var data = response.split('!')
                     document.getElementById("activeCounter").innerHTML = data[0]
-                    document.getElementById("cancelCounter").innerHTML =data[1]
-                    document.getElementById("completedCounter").innerHTML =data[2]
+                    document.getElementById("cancelCounter").innerHTML = data[1]
+                    document.getElementById("completedCounter").innerHTML = data[2]
                 }
             })
 
         }
+
+        var parameter = <?php echo isset($_GET['order_id']) ? $_GET['order_id']: 0 ; ?>  
+        // alert(parameter)
+        if (parameter > 0) {
+            $("#search").val(parameter)
+            $.ajax({
+                url: '../Controllers/_orders.php', // Replace with your server endpoint
+                type: 'POST',
+                data: {
+                    search: parameter,
+                    action: "parameterOrderId"
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data != 0) {
+                        $("#tbody").html(data)
+
+                    } else {
+                        alert("There is not any order on this location!")
+                        $("#tbody").html('')
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error); // Handle any errors here
+                }
+            });
+        }else{
+            showData('all')
+        }
+
+        $("#searchBtn").on("click",function(){
+           var search = $("#search").val();
+            $.ajax({
+                url: '../Controllers/_orders.php', // Replace with your server endpoint
+                type: 'POST',
+                data: {
+                    search: search,
+                    action: "search"
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data != 0) {
+                        $("#tbody").html(data)
+
+                    } else {
+                        alert("There is not any order on this location!")
+                        $("#tbody").html('')
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error); // Handle any errors here
+                }
+            });
+        })
+
     })
 </script>

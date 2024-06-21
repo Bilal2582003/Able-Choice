@@ -991,7 +991,7 @@ include "../Model/connection.php";
 
                     <div>
                         <h3 class="topborder"><span>Payment Method</span></h3>
-                        <input type="radio" required value="cashondeleivery" class="payment_mode" name="payment" checked>
+                        <input type="radio" required value="cashondelivery" class="payment_mode" name="payment" checked>
                         <p>Cash On Delivery (COD)</p>
                         <p class="padleft">
 
@@ -1007,7 +1007,7 @@ include "../Model/connection.php";
                        
                         <!-- <a href="#" class="padleft">What is Paypal?</a> -->
                     </div>
-                    <input type="submit" name="submit"  value="Place Order" class="redbutton">
+                    <input type="submit" name="submit"  value="Place Order" class="redbutton" >
                 </div>
             </form>
         </div>
@@ -1047,6 +1047,8 @@ include "../Model/connection.php";
      document.getElementById("netAmount").innerHTML = parseInt(a)  + parseInt(b)
         }
        
+
+
         function placeOrder(){
             var name =  document.getElementById('fname').value;
             var email =  document.getElementById('email').value;
