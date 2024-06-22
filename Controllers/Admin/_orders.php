@@ -84,7 +84,7 @@ if (isset($_POST['action']) && isset($_SESSION['role'])) {
     </td>
     <td>
      
-                <button class="btn btn-secondary" type="button" onclick="showOrderDetail(' . $row['id'] . ')">
+                <button class="btn btn-secondary" type="button"  onclick="openModal(`showOrderDetail`,'.$row['id'].')">
                   Show Detail
                 </button>
              

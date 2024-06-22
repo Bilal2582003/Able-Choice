@@ -124,12 +124,12 @@ include '../../Model/connection.php';
 <div id="chkStatus" style="display:none">all</div>
 
 
-<div class="modal" id="editModal">
+<div class="modal" id="showOrderDetail">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Order Details</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" onclick="closeModal('showOrderDetail')">&times;</button>
             </div>
             <div class="modal-body">
                 <form action="update.php" id="edit-form">
@@ -137,7 +137,7 @@ include '../../Model/connection.php';
                     <!-- Input fields for email, first name, last name, and address -->
                     <!-- ... -->
                     <button type="button" class="btn btn-primary" id="btnUpdateSubmit">Update</button>
-                    <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger float-right" onclick="closeModal('showOrderDetail')">Close</button>
                 </form>
             </div>
         </div>
