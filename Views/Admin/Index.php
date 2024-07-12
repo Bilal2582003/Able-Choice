@@ -37,6 +37,57 @@ include '../../Model/connection.php';
         font-size: 14px;
 
     }
+
+    .UBtn {
+        border-radius: 7px;
+        margin: 10px auto;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 11px;
+        transition: .25s ease-in-out !important;
+        font-weight: 600;
+        min-height: 40px;
+        padding: 5px 25px;
+        background-color: black;
+        color: gold;
+        width: 20%;
+        font-family: fontAwesome
+    }
+
+    .UBtn:hover {
+        background-color: white;
+        /* box-shadow: 0px 3px 6px gold; */
+        border: 1.5px solid gold;
+        color: black;
+        /* box-shadow: gold 1px 4px 15px 9px; */
+    }
+
+    .CBtn {
+        border-radius: 7px;
+        margin: 10px auto;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 11px;
+        transition: .25s ease-in-out !important;
+        font-weight: 600;
+        min-height: 40px;
+        padding: 5px 25px;
+        background-color: red;
+        color: white;
+        width: 20%;
+        font-family: fontAwesome
+    }
+
+    .CBtn:hover {
+        background-color: white;
+        /* box-shadow: 0px 3px 6px gold; */
+        border: 1.5px solid red;
+        color: red;
+        /* box-shadow: gold 1px 4px 15px 9px; */
+    }
+    input{
+        margin:3px
+    }
 </style>
 <main id="main">
 
@@ -124,21 +175,29 @@ include '../../Model/connection.php';
 <div id="chkStatus" style="display:none">all</div>
 
 
-<div class="modal" id="showOrderDetail">
-    <div class="modal-dialog">
+<div class="modal" id="showOrderDetail" style="min-width:80%">
+    <div class="modal-dialog" style="min-width:80%">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Order Details</h4>
-                <button type="button" onclick="closeModal('showOrderDetail')">&times;</button>
+                <button type="button" onclick="closeModal('showOrderDetail')" style="
+    background-color: transparent;
+    border: none;
+    font-size: x-large;
+    color: red;
+">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="update.php" id="edit-form">
-                    <input class="form-control" type="hidden" name="id">
-                    <!-- Input fields for email, first name, last name, and address -->
-                    <!-- ... -->
-                    <button type="button" class="btn btn-primary" id="btnUpdateSubmit">Update</button>
-                    <button type="button" class="btn btn-danger float-right" onclick="closeModal('showOrderDetail')">Close</button>
-                </form>
+
+                <div class="col-12" id="modalBody">
+
+                </div>
+                <br>
+                <hr>
+                <button type="button" class="btn UBtn" id="btnUpdateSubmit">Update</button>
+                <button type="button" class="btn CBtn float-right"
+                    onclick="closeModal('showOrderDetail')">Close</button>
+
             </div>
         </div>
     </div>
@@ -232,20 +291,40 @@ include "Master/footer.php";
 
         }
 
-        
-    })
-    function showOrderDetail(id){
-        $(document).ready(function(){
-            $.ajax({
-                url: '../../Controllers/Admin/_orders.php',
+        $("#btnUpdateSubmit").on("click",function(){
+           var name = $('#editName').val();
+           var email = $('#editEmail').val();
+           var phone = $('#editPhone').val();
+           var add = $('#editAddress').val();
+           var city = $('#editCity').val();
+           var state = $('#editState').val();
+           var country = $('#editCountry').val();
+           var order_id = $('#modalEditId').val();
+           $.ajax({
+            url: '../../Controllers/Admin/_orders.php',
                 method: 'POST',
                 data: {
-                    action: 'editModal'
+                    name:name,
+                    email:email,
+                    phone:phone,
+                    add:add,
+                    city:city,
+                    state:state,
+                    country:country,
+                    order_id:order_id,
+                    action: 'UpdateOrderData'
                 },
                 success: function (response) {
-                  
+                    console.log(response)
+                    if(response == '1'){
+                        alert("Updated Successfully")
+                    }else{
+                        alert("Something went wrong!")
+                    }
                 }
-            })
+           })
         })
-    }
+
+    })
+
 </script>

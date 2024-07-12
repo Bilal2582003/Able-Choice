@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../Assets/Style/checkOut.css">
 <?php
+$page = "CheckOut";
 session_start();
 // $local_ip = shell_exec('ipconfig');
 // preg_match('/IPv4 Address.*?: ([^\s]+)/', $local_ip, $matches);
@@ -777,8 +778,8 @@ include "../Model/connection.php";
             <div class="col-12 col">
                 <div class="info-bar">
                     <p><a style="cursor:pointer" href="Login.php">
-                        <i class="fa fa-info"></i>
-                        Returning customer? Click here to login</a>
+                            <i class="fa fa-info"></i>
+                            Returning customer? Click here to login</a>
                     </p>
                 </div>
                 <p>
@@ -833,19 +834,19 @@ include "../Model/connection.php";
                     </select> -->
 
                     <?php
-                   $name = '';
-                   $email = '';
-                   $phone = '';
-                   $address_address = '';
-                   $city = '';
-                   $state = '';
-                   $postal_code = '';
-                   $country = '';
-                    if(isset($_SESSION['user_id'])){
-                        $user_id= $_SESSION['user_id'] ;
-                        $query="SELECT user.*,address.address as address_address, address.city as city, address.state as state, address.postal_code as postal_code,address.country as country from user join address on address.user_id = user.id where user.id = '$user_id' and user.deleted_at is null";
-                        $res=mysqli_query($con,$query);
-                        if(mysqli_num_rows($res) > 0){
+                    $name = '';
+                    $email = '';
+                    $phone = '';
+                    $address_address = '';
+                    $city = '';
+                    $state = '';
+                    $postal_code = '';
+                    $country = '';
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id'];
+                        $query = "SELECT user.*,address.address as address_address, address.city as city, address.state as state, address.postal_code as postal_code,address.country as country from user join address on address.user_id = user.id where user.id = '$user_id' and user.deleted_at is null";
+                        $res = mysqli_query($con, $query);
+                        if (mysqli_num_rows($res) > 0) {
                             $row = mysqli_fetch_assoc($res);
                             $name = $row['name'];
                             $email = $row['email'];
@@ -855,12 +856,12 @@ include "../Model/connection.php";
                             $state = $row['state'];
                             $postal_code = $row['postal_code'];
                             $country = $row['country'];
-                        }  
+                        }
                     }
-                    
+
                     ?>
 
-                    
+
                     <div class="width50 padright">
                         <label for="fname">First Name</label>
                         <input type="text" name="fname" required value="<?php echo $name ?>" id="fname" required>
@@ -869,15 +870,15 @@ include "../Model/connection.php";
                         <label for="lname">Email</label>
                         <input type="text" name="email" id="email" value="<?php echo $email ?>" required>
                     </div>
-                    
+
                     <label for="address">Address</label>
                     <input type="text" name="address" value="<?php echo $address_address ?>" id="address" required>
                     <input type="text" name="address" id="address2" placeholder="Optional">
                     <label for="city">Country</label>
                     <select name="country" id="country" required>
-                                <option value="pak">Pakistan</option>
-                            </select>
-                  <label for="state">State Name</label>
+                        <option value="pak">Pakistan</option>
+                    </select>
+                    <label for="state">State Name</label>
                     <input type="text" value="<?php echo $state ?>" name="state" id="state" required>
                     <div class="row">
                         <div class="col-sm-6">
@@ -886,7 +887,8 @@ include "../Model/connection.php";
                         </div>
                         <div class="col-sm-6">
                             <label for="postcode">Postcode</label>
-                            <input type="text" name="postcode" value="<?php echo $postal_code ?>" id="postcode" placeholder="Postcode / Zip" required>
+                            <input type="text" name="postcode" value="<?php echo $postal_code ?>" id="postcode"
+                                placeholder="Postcode / Zip" required>
                         </div>
                     </div>
                     <div class="row">
@@ -896,7 +898,7 @@ include "../Model/connection.php";
                         </div>
                         <div class="col-sm-6">
                             <label for="phone2">Phone 2</label>
-                            <input type="text" name="phone2" id="phone2" >
+                            <input type="text" name="phone2" id="phone2">
                         </div>
                     </div>
 
@@ -927,7 +929,7 @@ include "../Model/connection.php";
                             // session_start();
                             $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
                             $ipAddress = $_SESSION['token'];
-                            $query = "SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where c.user_id = '$user_id' or c.ip_address = '$ipAddress' and c.deleted_at is null";
+                            $query = "SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where (c.user_id = '$user_id' or c.ip_address = '$ipAddress') and c.deleted_at is null";
 
                             $res = mysqli_query($con, $query);
                             if (mysqli_num_rows($res) > 0) {
@@ -1007,10 +1009,11 @@ include "../Model/connection.php";
                     <div>
                         <input type="radio" required value="banktransfer" class="payment_mode" name="payment">
                         <p>Bank Transfer</p>
-                       
+
                         <!-- <a href="#" class="padleft">What is Paypal?</a> -->
                     </div>
-                    <input type="submit" name="submit"  value="Place Order" class="redbutton" >
+                    <input type="submit" name="submit" onclick="disableButton(this)" value="Place Order"
+                        class="redbutton">
                 </div>
             </form>
         </div>
@@ -1044,35 +1047,38 @@ include "../Model/connection.php";
         setTimeout(() => {
             setNetAmount()
         }, 1000);
-         function setNetAmount() {
-            var a =document.getElementById("totalSum").innerHTML
-            var b =document.getElementById("shipTotal").innerHTML
-     document.getElementById("netAmount").innerHTML = parseInt(a)  + parseInt(b)
+        function setNetAmount() {
+            var a = document.getElementById("totalSum").innerHTML
+            var b = document.getElementById("shipTotal").innerHTML
+            document.getElementById("netAmount").innerHTML = parseInt(a) + parseInt(b)
         }
-       
 
+        function disableButton(button) {
+            
+            button.value = 'Processing...'; // Optionally change text to indicate processing
+        }
 
-        function placeOrder(){
-            var name =  document.getElementById('fname').value;
-            var email =  document.getElementById('email').value;
-            var address =  document.getElementById('address').value;
-            var address2 =  document.getElementById('address2').value;
-            var country =  document.getElementById('country').value;
-            var state =  document.getElementById('state').value;
-            var city =  document.getElementById('city').value;
-            var postcode =  document.getElementById('postcode').value;
-            var phone1 =  document.getElementById('phone1').value;
-            var phone2 =  document.getElementById('phone2').value;
-            var notes =  document.getElementById('notes').value;
-            var shipTotal =  document.getElementById('shipTotal').value;
+        function placeOrder() {
+            var name = document.getElementById('fname').value;
+            var email = document.getElementById('email').value;
+            var address = document.getElementById('address').value;
+            var address2 = document.getElementById('address2').value;
+            var country = document.getElementById('country').value;
+            var state = document.getElementById('state').value;
+            var city = document.getElementById('city').value;
+            var postcode = document.getElementById('postcode').value;
+            var phone1 = document.getElementById('phone1').value;
+            var phone2 = document.getElementById('phone2').value;
+            var notes = document.getElementById('notes').value;
+            var shipTotal = document.getElementById('shipTotal').value;
             var payment_mode = '';
-            $(".payment_mode").each(function(){
-                if($(this).prop('checked') == true){
+            $(".payment_mode").each(function () {
+                if ($(this).prop('checked') == true) {
                     payment_mode = $(this).val()
                 }
             })
 
-            if(name != '' && email != '' && address != '' && address != '' && address2 != '' && country != '' && state != '' && city != '' && postcode != '' && phone1 != '' && payment_mode != ''){
+            if (name != '' && email != '' && address != '' && address != '' && address2 != '' && country != '' && state != '' && city != '' && postcode != '' && phone1 != '' && payment_mode != '') {
                 $.ajax({
 
                 })
@@ -1080,6 +1086,6 @@ include "../Model/connection.php";
 
         }
 
-        
+
 
     </script>
