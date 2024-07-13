@@ -22,7 +22,7 @@ function setToken($con){
 
 }
 setToken($con);
-echo $_SESSION['token'];
+// echo $_SESSION['token'];
 ?>
 <style>
   .inImage{
