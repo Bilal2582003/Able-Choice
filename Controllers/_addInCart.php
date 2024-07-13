@@ -32,6 +32,8 @@ session_start();
         }
 
         $res=mysqli_query($con,$query);
+        $query="UPDATE product set qty = qty - $qty where id ='$id' ";
+        $res=mysqli_query($con,$query);
         echo "1";
     }
 

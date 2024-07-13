@@ -3,6 +3,24 @@ session_start();
 include "../Model/connection.php";
 // if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
     if(isset($_POST['page']) && $_POST['page'] == 'GetAddToCartData'){
+        $query="SELECT * from cart_detail where deleted_at is null";
+        $res=mysqli_query($con,$query);
+        if(mysqli_num_rows($res) > 0){
+            while($row=mysqli_fetch_assoc($res)){
+             $created_at = $row['created_at'];
+             $qty = $row['qty'];
+             $pId = $row['product_id'];
+             $Id = $row['id'];
+             $todayDate = date("Y-m-d H:i:s");
+             $newDate = date("Y-m-d H:i:s" , strtotime("+30 days ",$created_at));
+             if($todayDate > $newDate ){
+                $uQuery="UPDATE product set qty = qty + $qty where id = '$pId'";
+                $ures=mysqli_query($con,$uQuery);
+                $uQuery="UPDATE cart_detail set deleted_at = '$todayDate' where id = '$Id'";
+                $ures=mysqli_query($con,$uQuery);
+             }   
+            }
+        }
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '' ;
         $output='';
         $totalSum =0;

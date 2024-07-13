@@ -19,9 +19,12 @@ include "breadcrumbHeader.php"; ?>
           <li title="Home"><a href="Index.php" <?php if ($page == 'Index') {
             echo "class='active'";
           } ?>>Home</a></li>
-          <li title="Home"><a href="sqlbackupfile.php" <?php if ($page == 'sqlBackUp') {
+          <li title="DB"><a href="sqlbackupfile.php" <?php if ($page == 'sqlBackUp') {
             echo "class='active'";
           } ?>>DB BackUp</a></li>
+          <li title="User"><a href="User.php" <?php if ($page == 'User') {
+            echo "class='active'";
+          } ?>>User</a></li>
 
 
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
