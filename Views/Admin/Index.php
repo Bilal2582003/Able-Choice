@@ -138,6 +138,23 @@ include '../../Model/connection.php';
             <div class="row gy-4 mt-1">
                 <div class="col-lg-12 col-md-12">
                     <div class="info-item">
+                        
+                    <div class="container mt-4">
+                            <div class="row">
+                                <div class="offset-1 col-8"
+                                    style="display:flex;justify-content:center;align-items:center">
+                                    <label for="search" class="search-label m-2 ">Search</label>
+                                    <input type="text" id="search" class=" m-2 form-control search-bar"
+                                        placeholder="Type your search here..." />
+                                </div>
+                                <div class="col-2" style="display:flex;align-items:center;">
+                                    <button id="searchBtn" class="btn btn-success">Search</button>
+                                </div>
+                            </div>
+                            <br>
+                            <hr style="width:85%;margin:auto;color:orange;border:1px solid orange">
+                            <br>
+                        </div>
                         <div
                             style="margin:0px auto 0px auto;padding:0px 10px 10px 10px;max-height:500px; overflow-y:auto;width:100%">
 
@@ -290,6 +307,33 @@ include "Master/footer.php";
             })
 
         }
+
+
+        $("#searchBtn").on("click",function(){
+           var search = $("#search").val();
+            $.ajax({
+                url: '../../Controllers/Admin/_orders.php', // Replace with your server endpoint
+                type: 'POST',
+                data: {
+                    search: search,
+                    action: "search"
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data != 0) {
+                        $("#tbody").html(data)
+
+                    } else {
+                        alert("There is not any order on this location!")
+                        $("#tbody").html('')
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error); // Handle any errors here
+                }
+            });
+        })
+
 
         $("#btnUpdateSubmit").on("click",function(){
            var name = $('#editName').val();

@@ -148,14 +148,6 @@ if (isset($_POST['action']) && isset($_SESSION['role'])) {
         }
         echo $activeCount . '!' . $cancelCount . '!' . $completedCount;
     }
-    // if ($_POST['action'] == 'editModal' && !isset($_POST['forTable'])) {
-    //     $id = $_POST['id'];
-    //     $query="SELECT * from order_items as oi join orders o on o.id = oi.order_id join product as p on p.id = oi.product_id where oi.id = '$id' ";
-    //     $res=mysqli_query($con,$query);
-    //     if(mysqli_num_rows($res) > 0){
-    //         $row=mysqli_fetch_assoc($res);
-    //     }
-    // }
     if ($_POST['action'] == 'showOrderModalData' && !isset($_POST['forTable'])) 
     {
           $id = $_POST['id'];
@@ -258,6 +250,77 @@ if ($stmt === false) {
     $stmt->close();
 }
 
+    }
+    if ($_POST['action'] == 'search' && !isset($_POST['forTable'])) {
+        $id = $_POST['search'];
+        $output = '';
+       echo $query = "SELECT order_items.*,product.image1 as image, product.name as pName, orders.payment_method as mode, orders.name as name, orders.phone1 as phone1 FROM order_items 
+            JOIN orders ON order_items.order_id = orders.id 
+            JOIN product ON order_items.product_id = product.id where (orders.id='$id' or product.name like '%$id%' or orders.payment_method like '%$id%' or orders.name like '%$id%' or orders.phone1 like '%$id%' ) and deleted_at is null
+            ";
+        $res = mysqli_query($con, $query);
+        if (mysqli_num_rows($res) > 0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                $option = '';
+                if ($row['is_active'] == 1 && $row['is_cancelled'] == 0 && $row['is_completed'] == 0) {
+                    if ($row['mode'] == 'banktransfer') {
+                        $option = '
+                            <option value="active" disabled selected>Active</option>
+                            <option value="cancel" disabled>Cancel</option>
+                            <option value="completed" disabled>Completed</option>
+                            ';
+                    } else {
+                        $option = '
+                            <option value="active" selected>Active</option>
+                            <option value="cancel">Cancel</option>
+                            <option value="completed" disabled>Completed</option>
+                            ';
+                    }
+                }
+                if ($row['is_cancelled'] == 1 || $row['is_completed'] == 1 && $row['is_active'] == 0) {
+                    $option = '
+                    <option value="active" disabled>Active</option>
+                    <option value="cancel" disabled selected>Cancel</option>
+                    <option value="completed" disabled>Completed</option>
+                    ';
+
+                }
+                if ($row["mode"] == 'banktransfer') {
+                    $mode = 'BANK TRANSFER';
+                } else {
+                    $mode = 'CASH ON DELIVERY';
+
+                }
+
+
+                $output .= '
+                <tr>
+                <td style="display:none">' . $row["id"] . '</td>
+                <td>' . $row["name"] . '</td>
+                <td>' . $row["pName"] . '</td>
+                <td>  <img width="100%" height="70px" src="../../Assets/Images/Products/' . $row["image"] . '"/></td>
+                <td>' . $row["qty"] . '</td>
+                <td>' . $row["per_amount"] . '</td>
+                <td>' . $row["total_amount"] . '</td>
+                <td>' . $row['phone1'] . '</td>
+                <td>
+                <select class="status">
+                ' . $option . '
+                </select>
+                </td>
+                     <td>
+     
+                <button class="btn btn-secondary" type="button"  onclick="openModal(`showOrderDetail`,' . $row['order_id'] . ')">
+                  Show Detail
+                </button>
+             
+    </td>
+                    </tr>
+                    ';
+
+            }
+        }
+        echo $output != '' ? $output : 0;
     }
 } else {
     header("location:../../Views/Admin/Login.php");
