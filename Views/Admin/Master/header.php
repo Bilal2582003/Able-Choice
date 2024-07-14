@@ -25,6 +25,9 @@ include "breadcrumbHeader.php"; ?>
           <li title="User"><a href="User.php" <?php if ($page == 'User') {
             echo "class='active'";
           } ?>>User</a></li>
+          <li title="Product Category"><a href="ProductCategory.php" <?php if ($page == 'productCategory') {
+            echo "class='active'";
+          } ?>>Product Category</a></li>
 
 
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
