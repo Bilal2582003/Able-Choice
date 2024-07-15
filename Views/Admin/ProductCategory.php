@@ -102,26 +102,26 @@ include '../../Model/connection.php';
             <div class="row gy-4 mt-1">
                 <div class="col-lg-12 col-md-12">
                     <div class="info-item">
-                        
+
                         <div class="container mt-4">
                             <div class="row">
                                 <div class="offset-1 col-8"
-                                style="display:flex;justify-content:center;align-items:center">
-                                <label for="search" class="search-label m-2 ">Search</label>
-                                <input type="text" id="search" class=" m-2 form-control search-bar"
-                                placeholder="Type your search here..." />
-                            </div>
-                            <div class="col-1" style="display:flex;align-items:center;">
-                                <button id="searchBtn" class="btn btn-success">Search</button>
-                            </div>
+                                    style="display:flex;justify-content:center;align-items:center">
+                                    <label for="search" class="search-label m-2 ">Search</label>
+                                    <input type="text" id="search" class=" m-2 form-control search-bar"
+                                        placeholder="Type your search here..." />
+                                </div>
+                                <div class="col-1" style="display:flex;align-items:center;">
+                                    <button id="searchBtn" class="btn btn-success">Search</button>
+                                </div>
 
-                            
-                            <div class="col-2" style="display:flex;align-items:center;">
 
-                            <button class="btn btn-primary">
-                                Add New
-                            </button>
-                            </div>
+                                <div class="col-2" style="display:flex;align-items:center;">
+
+                                    <button class="btn btn-primary" onclick="openModal(`addProductCategory`,0)">
+                                        Add New
+                                    </button>
+                                </div>
 
                             </div>
                             <br>
@@ -169,14 +169,44 @@ include '../../Model/connection.php';
             </div>
             <div class="modal-body">
 
-                <div class="col-12" id="modalBody">
+                <div class="col-12" id="EditModalForm">
 
                 </div>
                 <br>
                 <hr>
-                <button type="button" class="btn UBtn" id="btnUpdateSubmit">Update</button>
+                <button type="button" class="btn UBtn" onclick="updateProductCategory()">Update</button>
                 <button type="button" class="btn CBtn float-right"
                     onclick="closeModal('showOrderDetail')">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="addProductCategory" style="min-width:80%">
+    <div class="modal-dialog" style="min-width:80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Category</h4>
+                <button type="button" onclick="closeModal('addProductCategory')" style="
+    background-color: transparent;
+    border: none;
+    font-size: x-large;
+    color: red;
+    ">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-12" id="modalBody">
+                <div class="row">
+                    <div class="col-3" style="text-align:right;"><label style="vertical-align:sub">Name</label></div>
+                    <div class="col-9"><input class="form-control" style="width: 80%; padding:5px border-radius:13px;" type="text" id="name" ></div>
+                </div>
+                </div>
+                <br>
+                <hr>
+                <button type="button" class="btn UBtn" id="addNew">Add</button>
+                <button type="button" class="btn CBtn float-right"
+                    onclick="closeModal('addProductCategory')">Close</button>
 
             </div>
         </div>
@@ -188,14 +218,14 @@ include "Master/footer.php";
 ?>
 <script>
     function showTable() {
-        $(document).ready(function() {
+        $(document).ready(function () {
             $.ajax({
                 url: "../../Controllers/Admin/_productCategory.php",
                 type: "POST",
                 data: {
                     Action: "showTable"
                 },
-                success: function(data) {
+                success: function (data) {
                     //  console.log(data)
                     $("#tbody").html(data)
                 }
@@ -205,18 +235,18 @@ include "Master/footer.php";
     showTable();
 
 
-    function editBank(id) {
+    function getCategoryData(id) {
         // console.log(1)
         var dId = id;
-        $(document).ready(function() {
+        $(document).ready(function () {
             $.ajax({
-                url: "../Controllers/_bank.php",
+                url: "../../Controllers/Admin/_productCategory.php",
                 type: "POST",
                 data: {
                     id: id,
                     Action: "fetchModal"
                 },
-                success: function(data) {
+                success: function (data) {
                     // console.log(data)
                     $("#EditModalForm").html(data)
                 }
@@ -226,33 +256,25 @@ include "Master/footer.php";
     };
 
 
-    function updateBank() {
+    function updateProductCategory() {
         var editId = document.getElementById("editId").value
-        var editname = document.getElementById("editname").value
-        var branch = document.getElementById("editBranch").value
-        var head_code = document.getElementById("editHeadCode").value
-        var payment_mode = document.getElementById("editPaymentMode").value
-        // var editproperty = document.getElementById("editproperty").value
-
-
-        $(document).ready(function() {
+        var editname = document.getElementById("editName").value
+       
+        $(document).ready(function () {
             $.ajax({
-                url: "../Controllers/_bank.php",
+                url: "../../Controllers/Admin/_productCategory.php",
                 type: "POST",
                 data: {
                     id: editId,
                     name: editname,
-                    branch: branch,
-                    head_code: head_code,
-                    payment_mode: payment_mode,
-                    Action: "updateBank"
+                    Action: "Update"
                 },
-                success: function(data) {
+                success: function (data) {
                     // console.log(data)
                     if (data == 1) {
-                        alert("Updated Bank successfully");
+                        alert("Updated Category successfully");
                         showTable();
-                        $('#editModal').modal('hide');
+                        closeModal('showOrderDetail');
                     } else {
                         console.log(data)
                     }
@@ -264,9 +286,9 @@ include "Master/footer.php";
 
 
     // delete group
-    function deleteBank(id) {
+    function deleteBtn(id) {
         if (confirm("Do you want to delete!") == true) {
-            window.location.assign("../Controllers/_bank.php?id=" + id);
+            window.location.assign("../../Controllers/Admin/_productCategory.php?id=" + id);
         }
     }
 
@@ -274,35 +296,27 @@ include "Master/footer.php";
 
 
 
-    $(document).ready(function() {
-        $(".addNew").on("click", function() {
+    $(document).ready(function () {
+        $("#addNew").on("click", function () {
 
             var name = $("#name").val();
-            var branch = $("#branch").val();
-            var head_code = $("#head_code").val();
-            var payment_mode = $("#payment_mode").val();
 
             if (name != '') {
                 $.ajax({
-                    url: "../Controllers/_bank.php",
+                    url: "../../Controllers/Admin/_productCategory.php",
                     type: "POST",
                     data: {
                         name: name,
-                        branch: branch,
-                        head_code: head_code,
-                        payment_mode: payment_mode,
                         Action: "add"
                     },
-                    success: function(data) {
+                    success: function (data) {
                         console.log(data)
                         if (data == 1) {
-                            alert("Added Bank");
+                            alert("Added Categpory");
                             showTable();
-                            $('#addModal').modal('hide');
+                            closeModal('addProductCategory');
 
                             $("#name").val('');
-                            $("#branch").val('');
-                            $("#property").val('');
                         }
                     }
                 });
