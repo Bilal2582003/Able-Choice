@@ -89,6 +89,9 @@ include '../../Model/connection.php';
     input {
         margin: 3px
     }
+    .hide{
+        display: none;
+    }
 </style>
 <main id="main">
 
@@ -163,10 +166,72 @@ include '../../Model/connection.php';
     ">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="col-12">
+                    <div class="row m-2">
+                        <input type="hidden" id="editId">
+                        <div class="col-4">
+                            <label>Name</label>
+                            <input type="text" id="editName" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>Email</label>
+                            <input type="text" id="editEmail" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>Address</label>
+                            <input type="text" id="editAddress" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4">
+                            <label>Parent</label>
+                            <input type="text" id="editParent" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>City</label>
+                            <input type="text" id="editCity" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>State</label>
+                            <input type="text" id="editState" class="form-control">
+                        </div>
 
-                <div class="col-12" id="modalBody">
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4">
+                            <label>Country</label>
+                            <input type="text" id="editCountry" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>Phone</label>
+                            <input type="text" id="editPhone" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>Password</label>
+                            <input type="text" class="form-control" id="editPassword">
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4">
+                            <label>Created At</label>
+                            <input type="text" class="form-control" disabled id="editCreatedAt">
+                        </div>
+                    </div>
+
+                    <div class="row" style="justify-content:flex-end">
+                        <div class="col-4">
+                            <button class="btn btn-secondary" id="historyBtn">Order History</button>
+                        </div>
+                    </div>
+
+                    <div class="row hide" id="historyDiv">
+                        <div class="col-8">
+this is mee
+                        </div>
+                    </div>
 
                 </div>
+
                 <br>
                 <hr>
                 <button type="button" class="btn UBtn" id="btnUpdateSubmit">Update</button>
@@ -182,6 +247,7 @@ include '../../Model/connection.php';
 include "Master/footer.php";
 ?>
 <script>
+    
     $(document).ready(function () {
 
         function showData(action) {
@@ -205,8 +271,8 @@ include "Master/footer.php";
             })
         }
         showData('all')
-        $("#searchBtn").on("click",function(){
-           var search = $("#search").val();
+        $("#searchBtn").on("click", function () {
+            var search = $("#search").val();
             $.ajax({
                 url: '../../Controllers/Admin/_user.php', // Replace with your server endpoint
                 type: 'POST',
@@ -230,6 +296,39 @@ include "Master/footer.php";
             });
         })
 
+        $(document).on("click", ".userDetailModal", function () {
+            var tr = $(this).closest('tr');
+            var id = tr.find("td").eq(0).html().trim()
+            alert(id)
+            $.ajax({
+                url: '../../Controllers/Admin/_user.php', // Replace with your server endpoint
+                type: 'POST',
+                data: {
+                    id: id,
+                    action: "getModalData"
+                },
+                success: function (data) {
+                    console.log(data)
+                    data = JSON.parse(data);
+                    // console.log(data['user']['id'])
+                    if (data['user']) {
+                        document.getElementById('editId').value = data['user']['id'];
+                        document.getElementById('editName').value = data['user']['name'];
+                        document.getElementById('editEmail').value = data['user']['email'];
+                        document.getElementById('editParent').value = data['user']['parent_name'];
+                        document.getElementById('editPhone').value = data['user']['phone'];
+                        document.getElementById('editPassword').value = data['user']['password'];
+                        document.getElementById('editAddress').value = data['user']['address_add'];
+                        document.getElementById('editCity').value = data['user']['city'];
+                        document.getElementById('editState').value = data['user']['state'];
+                        document.getElementById('editCountry').value = data['user']['country'];
+                        document.getElementById('editCreatedAt').value = data['user']['created_at'];
+                    }
+
+                }
+
+            })
+        })
 
         $("#btnUpdateSubmit").on("click", function () {
             var name = $('#editName').val();
@@ -265,6 +364,9 @@ include "Master/footer.php";
             })
         })
 
+        $("#historyBtn").on("click",function(){
+                $("#historyDiv").toggleClass('hide')
+        })
     })
 
 </script>

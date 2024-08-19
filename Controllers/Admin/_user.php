@@ -22,7 +22,7 @@ if (isset($_POST['action'])) {
                 <td > '.$row['country'].'  </td>
                 <td>
      
-                <button class="btn btn-secondary" type="button"  onclick="openModal(`showOrderDetail`,' . $row['id'] . ')">
+                <button class="btn btn-secondary  userDetailModal" type="button"  onclick="openModal(`showOrderDetail`,' . $row['id'] . ')">
                   Show Detail
                 </button>
              
@@ -52,7 +52,7 @@ if (isset($_POST['action'])) {
                 <td > '.$row['country'].'  </td>
                 <td>
      
-                <button class="btn btn-secondary" type="button"  onclick="openModal(`showOrderDetail`,' . $row['id'] . ')">
+                <button class="btn btn-secondary userDetailModal" type="button"  onclick="openModal(`showOrderDetail`,' . $row['id'] . ');">
                   Show Detail
                 </button>
              
@@ -63,6 +63,25 @@ if (isset($_POST['action'])) {
             }
         }
         echo $output != '' ? $output : 0;
+    }
+    if($_POST['action'] == 'getModalData' && !isset($_POST['forTable'])){
+        $id = $_POST['id'];
+        $array = [];
+        $query="SELECT user.*, address.address as address_add, address.city as city, address.country as country, address.state as state from user join address on user.id = address.user_id where user.deleted_at is null and user.id = '$id'";
+        $res=mysqli_query($con,$query);
+        if(mysqli_num_rows($res) > 0 ){
+            $row =mysqli_fetch_assoc($res);
+            $array['user'] = $row;
+            $query1="SELECT * from orders join order_items on orders.id = order_items.order_id where orders.user_id = '$id' ";
+            $res1=mysqli_query($con,$query1);
+            if(mysqli_num_rows($res1) > 0 ){
+                $row1=mysqli_fetch_assoc($res1);
+                $array['order'] = $row1;
+            }
+            echo json_encode($array);
+        }else{
+            echo '0';
+        }
     }
 }
 ?>
