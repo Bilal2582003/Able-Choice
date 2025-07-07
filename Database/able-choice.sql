@@ -184,7 +184,7 @@ CREATE TABLE `product` (
   `image3` longtext DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   `description` longtext DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp(),
@@ -195,7 +195,7 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `product_category_id`, `image1`, `image2`, `image3`, `name`, `description`, `quantity`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `product` (`id`, `product_category_id`, `image1`, `image2`, `image3`, `name`, `description`, `qty`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'ashtry_green.jpg', 'ashtry_green1.jpg', NULL, 'Astry', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\nbbbbbbbbbbbbbbbbbbbbbbbbb\r\nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', 20, 400, '2024-06-09 21:39:34', '2024-06-09 21:39:55', NULL),
 (2, 2, 'massagerPink.jpg', 'guashaPink.jpg', 'massagerPink2.jpg', 'Massager Roller', 'massager roler massageer roller', 10, 800, '2024-06-09 21:39:34', '2024-06-09 21:39:59', NULL);
 
