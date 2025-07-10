@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - echo "Deploying code..."
+    - cp -r * /home/cyberns2/public_html/Able-Choice
