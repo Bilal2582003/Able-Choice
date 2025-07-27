@@ -9,7 +9,7 @@ include "breadcrumbHeader.php"; ?>
 
       <a href="index.html" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
         <h1>Able Choice<span></span></h1>
       </a>
 
@@ -70,7 +70,7 @@ include "breadcrumbHeader.php"; ?>
                 <li><a href="profile.php">Profile</a></li>
                 <li><a href="logout.php">Logout</a></li>
               <?php else: ?>
-                <li><a href="login.php">Login</a></li>
+                <li><a href="Login.php">Login</a></li>
               <?php endif; ?>
             </ul>
           </li>

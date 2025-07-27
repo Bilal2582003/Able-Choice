@@ -134,6 +134,8 @@ include "Master/footer.php";
 ?>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
         function showProfileDetails() {
             hideAllSections();
             document.getElementById('profileDetails').style.display = 'block';
@@ -150,6 +152,7 @@ include "Master/footer.php";
         }
 
         showProfileDetails();
+    })
     </script>
 
 </main>

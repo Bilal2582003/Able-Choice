@@ -19,19 +19,19 @@ include "Master/header.php";
             <div class="swiper-wrapper align-items-center">
 
               <div class="swiper-slide">
-                <img src="../Assets/Images/projects/remodeling-1.jpg" alt="">
+                <img src="../Assets/Images/projects/remodeling-1.webp" alt="">
               </div>
 
               <div class="swiper-slide">
-                <img src="../Assets/Images/projects/construction-1.jpg" alt="">
+                <img src="../Assets/Images/projects/construction-1.webp" alt="">
               </div>
 
               <div class="swiper-slide">
-                <img src="../Assets/Images/projects/design-1.jpg" alt="">
+                <img src="../Assets/Images/projects/design-1.webp" alt="">
               </div>
 
               <div class="swiper-slide">
-                <img src="../Assets/Images/projects/repairs-1.jpg" alt="">
+                <img src="../Assets/Images/projects/repairs-1.webp" alt="">
               </div>
 
             </div>
@@ -61,7 +61,7 @@ include "Master/header.php";
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
                 <div>
-                  <img src="../Assets/Images/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                  <img src="../Assets/Images/testimonials/testimonials-2.webp" class="testimonial-img" alt="">
                   <h3>Sara Wilsson</h3>
                   <h4>Designer</h4>
                 </div>

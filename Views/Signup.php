@@ -6,7 +6,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: url('../Assets/Images/hero-carousel/room.jpg');
+        background: url('../Assets/Images/hero-carousel/room.webp');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

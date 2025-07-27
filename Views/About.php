@@ -15,7 +15,7 @@ include "Master/header.php";
 
     <div class="row position-relative">
 
-      <div class="col-lg-7 about-img" style="background-image: url(../Assets/Images/breadcrumbs-bg-1.png);"></div>
+      <div class="col-lg-7 about-img" style="background-image: url(../Assets/Images/breadcrumbs-bg-1.webp);"></div>
 
       <div class="col-lg-7">
         <h2>It's result are also to good</h2>
@@ -138,7 +138,7 @@ include "Master/header.php";
         </div>
       </div>
 
-      <div class="col-lg-6 img-bg" style="background-image: url(../Assets/Images/alt-services-2.jpg);" data-aos="zoom-in" data-aos-delay="100"></div>
+      <div class="col-lg-6 img-bg" style="background-image: url(../Assets/Images/alt-services-2.webp);" data-aos="zoom-in" data-aos-delay="100"></div>
     </div>
 
   </div>
@@ -162,7 +162,7 @@ include "Master/header.php";
         <div class="swiper-slide">
           <div class="testimonial-wrap">
             <div class="testimonial-item">
-              <img src="../Assets/Images/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+              <img src="../Assets/Images/testimonials/testimonials-1.webp" class="testimonial-img" alt="">
               <h3>Saul Goodman</h3>
               <h4>Ceo &amp; Founder</h4>
               <div class="stars">
@@ -180,7 +180,7 @@ include "Master/header.php";
         <div class="swiper-slide">
           <div class="testimonial-wrap">
             <div class="testimonial-item">
-              <img src="../Assets/Images/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+              <img src="../Assets/Images/testimonials/testimonials-2.webp" class="testimonial-img" alt="">
               <h3>Sara Wilsson</h3>
               <h4>Designer</h4>
               <div class="stars">
@@ -198,7 +198,7 @@ include "Master/header.php";
         <div class="swiper-slide">
           <div class="testimonial-wrap">
             <div class="testimonial-item">
-              <img src="../Assets/Images/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+              <img src="../Assets/Images/testimonials/testimonials-3.webp" class="testimonial-img" alt="">
               <h3>Jena Karlis</h3>
               <h4>Store Owner</h4>
               <div class="stars">
@@ -216,7 +216,7 @@ include "Master/header.php";
         <div class="swiper-slide">
           <div class="testimonial-wrap">
             <div class="testimonial-item">
-              <img src="../Assets/Images/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+              <img src="../Assets/Images/testimonials/testimonials-4.webp" class="testimonial-img" alt="">
               <h3>Matt Brandon</h3>
               <h4>Freelancer</h4>
               <div class="stars">
@@ -234,7 +234,7 @@ include "Master/header.php";
         <div class="swiper-slide">
           <div class="testimonial-wrap">
             <div class="testimonial-item">
-              <img src="../Assets/Images/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+              <img src="../Assets/Images/testimonials/testimonials-5.webp" class="testimonial-img" alt="">
               <h3>John Larson</h3>
               <h4>Entrepreneur</h4>
               <div class="stars">

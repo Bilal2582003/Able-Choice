@@ -149,6 +149,8 @@ include '../Model/connection.php';
 include "Master/footer.php";
 ?>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
     $(document).ready(function () {
         $("#activeOrder").on("click", function () {
             showData('active');
@@ -287,5 +289,6 @@ include "Master/footer.php";
             });
         })
 
+    })
     })
 </script>

@@ -71,7 +71,7 @@
                         <tr rowspan="2">
                             <td><input type="checkbox" class="cartChk"></td>
                             <td class="w-40">
-                                <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png"
+                                <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.webp"
                                     class="img-fluid img-thumbnail" alt="Sheep">
                             </td>
                             <td colspan="5">
@@ -120,12 +120,14 @@
     </div>
 </div>
 <script>
-<?php
+    <?php
 include "../Assets/Script/addTocardFunc.js";
 ?>
+document.addEventListener("DOMContentLoaded", function () {
 
 $("#goToChkOutBtn").on("click", function() {
    window.location.assign("CheckOut.php")
+});
 });
  // function totalAmountCart(action, data) {
     //     var parent = $(data).parent();

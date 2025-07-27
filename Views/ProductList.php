@@ -220,6 +220,7 @@ include "../Model/connection.php";
 <? include "Master/footerLink.php"; ?>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
 
     // Function to load more products
     function loadMoreProducts() {
@@ -352,14 +353,14 @@ include "../Model/connection.php";
         // Handle filter button click
         $('li[data-filter]').on('click', function () {
             var filterValue = $(this).data('filter');
-
+// alert(filterValue)
             // Handle "All" button separately
             if (filterValue === '*') {
                 // Show all portfolio items
                 $('.portfolio-item').show("slow");
             } else {
                 // Hide all portfolio items
-                $('.portfolio-item').hide("sloe");
+                $('.portfolio-item').hide("slow");
 
                 // Show only the selected category
                 $(filterValue).show("slow");
@@ -369,5 +370,6 @@ include "../Model/connection.php";
             $('li[data-filter]').removeClass('filter-active');
             $(this).addClass('filter-active');
         });
+    })
     })
 </script>
