@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `address`
 --
-
+DROP TABLE IF EXISTS address;
 CREATE TABLE `address` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -53,7 +53,7 @@ INSERT INTO `address` (`id`, `user_id`, `address`, `city`, `state`, `postal_code
 --
 -- Table structure for table `card_detail`
 --
-
+DROP TABLE IF EXISTS card_detail;
 CREATE TABLE `card_detail` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -89,7 +89,7 @@ INSERT INTO `card_detail` (`id`, `user_id`, `product_id`, `qty`, `per_amount`, `
 --
 -- Table structure for table `order`
 --
-
+DROP TABLE IF EXISTS order;
 CREATE TABLE `order` (
   `id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `order` (
 --
 -- Table structure for table `orders`
 --
-
+DROP TABLE IF EXISTS orders;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -146,7 +146,7 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `email`, `address`, `city`, `stat
 --
 -- Table structure for table `order_items`
 --
-
+DROP TABLE IF EXISTS order_items;
 CREATE TABLE `order_items` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
@@ -179,7 +179,7 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `qty`, `per_amount`, 
 --
 -- Table structure for table `product`
 --
-
+DROP TABLE IF EXISTS product;
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `product_category_id` int(11) DEFAULT NULL,
@@ -208,7 +208,7 @@ INSERT INTO `product` (`id`, `product_category_id`, `image1`, `image2`, `image3`
 --
 -- Table structure for table `product_category`
 --
-
+DROP TABLE IF EXISTS product_category;
 CREATE TABLE `product_category` (
   `id` int(11) NOT NULL,
   `name` varchar(500) DEFAULT NULL,
@@ -231,7 +231,7 @@ INSERT INTO `product_category` (`id`, `name`, `created_at`, `updated_at`, `delet
 --
 -- Table structure for table `reviews`
 --
-
+DROP TABLE IF EXISTS reviews;
 CREATE TABLE `reviews` (
   `id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -247,7 +247,7 @@ CREATE TABLE `reviews` (
 --
 -- Table structure for table `user`
 --
-
+DROP TABLE IF EXISTS user;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `name` varchar(500) DEFAULT NULL,

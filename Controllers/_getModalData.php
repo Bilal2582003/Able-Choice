@@ -91,7 +91,7 @@ if (isset($_POST['id'])) {
                                                 <ul>
                                                     <li><strong>Category</strong> <span>' . $row['p_c_name'] . '</span></li>
                                                     <li><strong>Brand</strong> <span>Able Choice Company</span></li>
-                                                    <li><strong>Total Quantity</strong> <span>' . $row['quantity'] . '</span></li>
+                                                    <li><strong>Total Quantity</strong> <span>' . $row['qty'] . '</span></li>
                                                     <li><strong>Per Product Amount</strong> <span >' . $row['amount'] . '</span></li>
                                                     <!-- <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li> -->
                                                 </ul>

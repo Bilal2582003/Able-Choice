@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $payment_method = mysqli_real_escape_string($con, $_POST['payment']);
 
     // Calculate total amount
-      $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
+    $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
     $cart_res = mysqli_query($con, $cart_query);
     $total_amount = 0;
 
@@ -113,13 +113,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($payment_method == 'cashondelivery') {
         // Insert order details into the orders table
-      $order_query = "INSERT INTO orders ($queryUser name, email, address, city, state, postcode, country, phone1, phone2, notes, payment_method, total_amount, shipping_cost, net_amount,ip_address, order_date) VALUES ($queryUserVal '$fname', '$email', '$address', '$city', '$state', '$postcode', '$country', '$phone1', '$phone2', '$notes', '$payment_method', '$total_amount', '$shipping_cost', '$net_amount','$token', NOW())";
+        $order_query = "INSERT INTO orders ($queryUser name, email, address, city, state, postcode, country, phone1, phone2, notes, payment_method, total_amount, shipping_cost, net_amount,ip_address, order_date) VALUES ($queryUserVal '$fname', '$email', '$address', '$city', '$state', '$postcode', '$country', '$phone1', '$phone2', '$notes', '$payment_method', '$total_amount', '$shipping_cost', '$net_amount','$token', NOW())";
 
         if (mysqli_query($con, $order_query)) {
             $order_id = mysqli_insert_id($con);
 
             // Insert each cart item into order_items table
-          $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
+            $cart_query = "SELECT * FROM card_detail WHERE ($test) AND deleted_at IS NULL";
             $cart_res = mysqli_query($con, $cart_query);
             while ($cart_row = mysqli_fetch_assoc($cart_res)) {
                 $product_id = $cart_row['product_id'];
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $per_amount = $cart_row['per_amount'];
                 $total_amount = $cart_row['total_amount'];
 
-               $order_item_query = "INSERT INTO order_items (order_id, product_id, qty, per_amount, total_amount) VALUES ('$order_id', '$product_id', '$qty', '$per_amount', '$total_amount')";
+                $order_item_query = "INSERT INTO order_items (order_id, product_id, qty, per_amount, total_amount) VALUES ('$order_id', '$product_id', '$qty', '$per_amount', '$total_amount')";
                 mysqli_query($con, $order_item_query);
             }
 
@@ -137,11 +137,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirect to a thank you page or order confirmation page
 
-            include ('../smtp/PHPMailerAutoload.php');
+            include('../smtp/PHPMailerAutoload.php');
 
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
             $domainName = $_SERVER['HTTP_HOST'];
-            $url = $protocol.$domainName . '/Able%20Choice/Views/Orders.php?order_id=' . $order_id;
+            $url = $protocol . $domainName . '/Able%20Choice/Views/Orders.php?order_id=' . $order_id;
 
             $mail = new PHPMailer(true);
             $mail->IsSMTP();
@@ -181,6 +181,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['notes'] = $notes;
         // Create a Stripe Checkout Session
         try {
+            if ($_SERVER['SERVER_NAME'] === 'localhost') {
+                // Localhost environment
+                $domain = 'http://localhost/Able%20Choice';
+            } else {
+                // Live server (adjust this to your live domain)
+                $domain = 'https://able-choice.cybernsoft.com';
+            }
             $session = \Stripe\Checkout\Session::create([
                 'payment_method_types' => ['card'],
                 'line_items' => [
@@ -196,8 +203,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ]
                 ],
                 'mode' => 'payment',
-                'success_url' => 'http://localhost/Able%20Choice/Controllers/_success.php?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => 'http://localhost/Able%20Choice/Views/cancel.php',
+                'success_url' => $domain . '/Controllers/_success.php?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => $domain . '/Able%20Choice/Views/cancel.php',
             ]);
 
             header("Location: " . $session->url);
