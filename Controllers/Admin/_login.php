@@ -12,7 +12,7 @@ include "../../Model/connection.php";
 if(isset($_POST['email']) && isset($_POST['password'])){
     $email =$_POST['email'];
     $password =$_POST['password'];
-    $query = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+    $query = "SELECT * FROM user WHERE email = '$email' AND password = '$password' and role = 'admin'";
     $result = mysqli_query($con, $query);
 
     if(mysqli_num_rows($result) == 1) {

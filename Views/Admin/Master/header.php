@@ -25,6 +25,9 @@ include "breadcrumbHeader.php"; ?>
           <li title="Product Category"><a href="ProductCategory.php" <?php if ($page == 'productCategory') {
             echo "class='active'";
           } ?>>Product Category</a></li>
+          <li title="Admin Dashboard"><a href="admin_dashboard.php" <?php if ($page == 'Admin Dashboard') {
+            echo "class='active'";
+          } ?>>Admin Dashboard</a></li>
           <li title="DB"><a href="sqlbackupfile.php" <?php if ($page == 'sqlBackUp') {
             echo "class='active'";
           } ?>>DB BackUp</a></li>

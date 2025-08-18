@@ -96,35 +96,35 @@ include "../Model/connection.php";
 
             <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
                 <li data-filter="*" class="filter-active">All</li>
-                
-
                 <?php
-                
-                $query = "SELECT * from product_category where deleted_at is null";
+                $query = "SELECT * FROM product_category WHERE deleted_at IS NULL";
                 $res = mysqli_query($con, $query);
                 while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <li data-filter=".filter-<?php echo $row['name'] ?>" style="text-transform:uppercase;">
+                    <li data-filter=".filter-<?php echo $row['id'] ?>" style="text-transform:uppercase;">
                         <?php echo $row['name'] ?>
                     </li>
                     <?php
                 }
                 ?>
-
             </ul><!-- End Projects Filters -->
 
-            <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200" id="productListDiv"
-                >
-
+            <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200" id="productListDiv">
                 <?php
-
-                // $counter = $_POST['counter'];
-                $query = "SELECT product.*, product_category.name as product_category_name from product join product_category on product.product_category_id= product_category.id where product.deleted_at is null";
+                // pehli dafa load hone wale 15 products (random har category se ek)
+                $query = "SELECT p.*, c.name AS product_category_name, c.id AS category_id
+                    FROM product p 
+                    JOIN product_category c ON p.product_category_id = c.id
+                    WHERE p.deleted_at IS NULL
+                    GROUP BY c.id
+                    ORDER BY RAND()
+                    LIMIT 15
+                ";
                 $res = mysqli_query($con, $query);
                 if (mysqli_num_rows($res) > 0) {
                     while ($row = mysqli_fetch_assoc($res)) {
                         ?>
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-<?php echo $row["product_category_name"] ?>">
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-<?php echo $row["category_id"] ?>">
                             <div class="portfolio-content h-100">
                                 <img src="../Assets/Images/Products/<?php echo $row['image1'] ?>" class="img-fluid inImage"
                                     alt="">
@@ -132,28 +132,24 @@ include "../Model/connection.php";
                                     <h4 style="text-transform: capitalize">
                                         <?php echo $row['product_category_name'] ?>
                                     </h4>
-                                    <p>
-                                        <?php echo $row['name'] ?>
-                                    </p>
-                                    <!--button title="Add To Cart"
-                                data-gallery="portfolio-gallery-book" class="glightbox preview-link " style="border:0px;background-color:transparent" onclick="openModal(`addToCartModal`)"><i
-                                    class="bi bi-cart-plus"></i></button-->
+                                    <p><?php echo $row['name'] ?></p>
                                     <button title="More Details" class="details-link"
                                         style="border:0px;background-color:transparent;" id="moreDetail"
-                                        onclick="openModal(`moreDetailModal`, <?php echo $row['id'] ?> )"><i
-                                            class="bi bi-link-45deg" style="content:" \f470""></i></button>
+                                        onclick="openModal(`moreDetailModal`, <?php echo $row['id'] ?> )">
+                                        <i class="bi bi-link-45deg"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-
                         <?php
                     }
-
                 }
                 ?>
-               
             </div><!-- End Projects Container -->
+            <!-- Load More Button -->
+            <div class="text-center mt-4">
+                <button id="loadMoreBtn" class="btn cartBtn" style="width:auto">Load More</button>
+            </div>
 
         </div>
 
@@ -178,7 +174,7 @@ include "../Model/connection.php";
                 <!-- ======= Projet Details Section ======= -->
                 <section id="project-details" class="project-details">
                     <div class="container" id="moreDetailModalData" data-aos="fade-up" data-aos-delay="100">
-                        </div>
+                    </div>
                 </section>
                 <!-- End Projet Details Section -->
             </div>
@@ -220,156 +216,175 @@ include "../Model/connection.php";
 <? include "Master/footerLink.php"; ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    // Function to load more products
-    function loadMoreProducts() {
-        $(document).ready(function () {
-            // alert(page)
-            $.ajax({
-                url: '../Controllers/_getProduct.php', // Replace with your server endpoint
-                type: 'POST',
-                data: {
-                    page: 'data',
-                },
-                success: function (data) {
+        // Function to load more products
+        // function loadMoreProducts() {
+        //     $(document).ready(function () {
+        //         // alert(page)
+        //         $.ajax({
+        //             url: '../Controllers/_getProduct.php', // Replace with your server endpoint
+        //             type: 'POST',
+        //             data: {
+        //                 page: 'data',
+        //             },
+        //             success: function (data) {
 
-                    // Append the new products to the product container
-                    if (data != '0') {
-                        $('#productListDiv').html(data);
-                    } else {
-                        alert("Opps! Product List is not found. ")
-                    }
+        //                 // Append the new products to the product container
+        //                 if (data != '0') {
+        //                     $('#productListDiv').html(data);
+        //                 } else {
+        //                     alert("Opps! Product List is not found. ")
+        //                 }
 
-                },
-            });
-        })
-    }
+        //             },
+        //         });
+        //     })
+        // }
 
-    function totalAmount(action, data) {
-        var parent = $(data).parent().parent();
-        var qty = $(parent).find('.qty');
+        function totalAmount(action, data) {
+            var parent = $(data).parent().parent();
+            var qty = $(parent).find('.qty');
 
-        var parent_parent = $(parent).parent().parent().parent();
-        var perAmount = $(parent_parent).find(".perAmount");
-        var totalAmountElem = $(parent_parent).find(".totalAmount");
-        if (qty.val()) {
-            var qtyValue = parseInt(qty.val());
-        } else {
-            qtyValue = 1
-        }
-
-        if (action == '+') {
-            qtyValue++;
-        } else if (action == '-') {
-            qtyValue--;
-        }
-
-        if (qtyValue < 1 && action != '*') {
-            qtyValue = 1;
-        }
-
-
-        qty.val(qtyValue);
-
-        var perAmountValue = parseFloat(perAmount.html());
-        console.log(perAmountValue)
-        var total = qtyValue * perAmountValue;
-        totalAmountElem.html(total.toFixed(2));
-        console.log(totalAmountElem)
-    }
-
-    $(document).ready(function () {
-        function qty1(element) {
-            var parent = $(element).parent().find(".decrementBtn");
-            console.log($(element).val())
-            // if( $(element).val() ){
-            totalAmount('*', parent);
-            // }
-        }
-
-        $(document).on('click', '.incrementBtn', function () {
-            // console.log("yes");
-            totalAmount('+', $(this));
-        });
-
-        $(document).on('click', '.decrementBtn', function () {
-            totalAmount('-', $(this));
-        });
-
-        $(document).on('keyup', '.qty1', function () {
-            qty1(this)
-        });
-
-
-
-
-        function addInCartFunction(id, qty,amount, totalAmount){
-            $.ajax({
-                url: '../Controllers/_addInCart.php', // Replace with your server endpoint
-                type: 'POST',
-                data: {
-                    id: id,
-                    qty: qty,
-                    amount: amount,
-                    totalAmount:totalAmount,
-                    page: 'AddInAddToCart',
-                },
-                success: function (data) {
-                    // Append the new products to the product container
-                    if (data == '1') {
-                        // $('#productListDiv').html(data);
-                        alert("successfully Added")
-                        showCartData()
-                    } else if (data == '0') {
-                        // window.location.assign('Login.php')
-                    }
-                    console.log(data)
-
-                },
-            });
-        }
-
-        $(document).on('click', '#AddToCartBtn', function () {
-            var id = $("#AddToCartId").html();
-            var totalAmount = $(".totalAmountTotalAmount").html();
-            var amount = $("#perAmountPerAmount").html();
-            // alert(totalAmount)
-            var qty = $("#AddToCartId").parent().find('.qty').val();
-            addInCartFunction(id, qty,amount, totalAmount);
-        })
-        $(document).on('click', '.modalBuyNowBtn', function () {
-            var id = $("#AddToCartId").html();
-            var totalAmount = $(".totalAmountTotalAmount").html();
-            var amount = $("#perAmountPerAmount").html();
-            var qty = $("#AddToCartId").parent().find('.qty').val();
-            // alert(id + ' '+totalAmount+' '+amount+' '+ qty)
-            addInCartFunction(id, qty,amount, totalAmount);
-            window.location.assign("CheckOut.php")
-        })
-
-
-        
-        // Handle filter button click
-        $('li[data-filter]').on('click', function () {
-            var filterValue = $(this).data('filter');
-// alert(filterValue)
-            // Handle "All" button separately
-            if (filterValue === '*') {
-                // Show all portfolio items
-                $('.portfolio-item').show("slow");
+            var parent_parent = $(parent).parent().parent().parent();
+            var perAmount = $(parent_parent).find(".perAmount");
+            var totalAmountElem = $(parent_parent).find(".totalAmount");
+            if (qty.val()) {
+                var qtyValue = parseInt(qty.val());
             } else {
-                // Hide all portfolio items
-                $('.portfolio-item').hide("slow");
-
-                // Show only the selected category
-                $(filterValue).show("slow");
+                qtyValue = 1
             }
 
-            // Update active class
-            $('li[data-filter]').removeClass('filter-active');
-            $(this).addClass('filter-active');
-        });
-    })
+            if (action == '+') {
+                qtyValue++;
+            } else if (action == '-') {
+                qtyValue--;
+            }
+
+            if (qtyValue < 1 && action != '*') {
+                qtyValue = 1;
+            }
+
+
+            qty.val(qtyValue);
+
+            var perAmountValue = parseFloat(perAmount.html());
+            console.log(perAmountValue)
+            var total = qtyValue * perAmountValue;
+            totalAmountElem.html(total.toFixed(2));
+            console.log(totalAmountElem)
+        }
+
+        $(document).ready(function () {
+            let page = 1;
+
+            // Load More
+            $("#loadMoreBtn").on("click", function () {
+                page++;
+                $.ajax({
+                    url: '../Controllers/_getProduct.php',
+                    type: 'POST',
+                    data: { page: page },
+                    success: function (data) {
+                        if (data != '0') {
+                            $('#productListDiv').append(data);
+                        } else {
+                            $("#loadMoreBtn").hide();
+                        }
+                    }
+                });
+            });
+
+            function qty1(element) {
+                var parent = $(element).parent().find(".decrementBtn");
+                console.log($(element).val())
+                // if( $(element).val() ){
+                totalAmount('*', parent);
+                // }
+            }
+
+            $(document).on('click', '.incrementBtn', function () {
+                // console.log("yes");
+                totalAmount('+', $(this));
+            });
+
+            $(document).on('click', '.decrementBtn', function () {
+                totalAmount('-', $(this));
+            });
+
+            $(document).on('keyup', '.qty1', function () {
+                qty1(this)
+            });
+
+
+
+
+            function addInCartFunction(id, qty, amount, totalAmount) {
+                $.ajax({
+                    url: '../Controllers/_addInCart.php', // Replace with your server endpoint
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        qty: qty,
+                        amount: amount,
+                        totalAmount: totalAmount,
+                        page: 'AddInAddToCart',
+                    },
+                    success: function (data) {
+                        // Append the new products to the product container
+                        if (data == '1') {
+                            // $('#productListDiv').html(data);
+                            alert("successfully Added")
+                            showCartData()
+                        } else if (data == '0') {
+                            // window.location.assign('Login.php')
+                        }
+                        console.log(data)
+
+                    },
+                });
+            }
+
+            $(document).on('click', '#AddToCartBtn', function () {
+                var id = $("#AddToCartId").html();
+                var totalAmount = $(".totalAmountTotalAmount").html();
+                var amount = $("#perAmountPerAmount").html();
+                // alert(totalAmount)
+                var qty = $("#AddToCartId").parent().find('.qty').val();
+                addInCartFunction(id, qty, amount, totalAmount);
+            })
+            $(document).on('click', '.modalBuyNowBtn', function () {
+                var id = $("#AddToCartId").html();
+                var totalAmount = $(".totalAmountTotalAmount").html();
+                var amount = $("#perAmountPerAmount").html();
+                var qty = $("#AddToCartId").parent().find('.qty').val();
+                // alert(id + ' '+totalAmount+' '+amount+' '+ qty)
+                addInCartFunction(id, qty, amount, totalAmount);
+                window.location.assign("CheckOut.php")
+            })
+
+
+
+            // Handle filter button click
+            $('li[data-filter]').on('click', function () {
+                var filterValue = $(this).data('filter');
+                // alert(filterValue)
+                // Handle "All" button separately
+                if (filterValue === '*') {
+                    // Show all portfolio items
+                    $('.portfolio-item').fadeIn("slow");
+                } else {
+                    // Hide all portfolio items
+                    $('.portfolio-item').hide();
+
+                    // Show only the selected category
+                    $(filterValue).fadeIn("slow");
+                }
+
+                // Update active class
+                $('li[data-filter]').removeClass('filter-active');
+                $(this).addClass('filter-active');
+            });
+        })
     })
 </script>
