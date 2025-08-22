@@ -274,7 +274,7 @@ include "Master/header.php";
                                         Profile Informaton
                                     </a>
 
-                                    <a href="logout.php" class="list-group-item list-group-item-action border-0">Logout</a>
+                                    <a href="Logout.php" class="list-group-item list-group-item-action border-0">Logout</a>
                                 </div>
                             </div>
                         </div>

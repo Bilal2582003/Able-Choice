@@ -108,7 +108,7 @@ include "Master/header.php";
                 <a href="#" class="menu-link" data-page="#page-categories"><i class="fa fa-tags"></i> Categories</a>
                 <a href="#" class="menu-link" data-page="#page-users"><i class="fa fa-users"></i> Users</a>
                 <a href="#" class="menu-link" data-page="#page-orders"><i class="fa fa-shopping-cart"></i> Orders</a>
-                <a href="logout.php"><i class="fa fa-sign-out-alt"></i> Logout</a>
+                <a href="Logout.php"><i class="fa fa-sign-out-alt"></i> Logout</a>
             </div>
 
             <!-- Content -->

@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPSecure = "tls";
             $mail->SMTPAuth = true;
             $mail->Username = "huzaifa2582003@gmail.com";
-            $mail->Password = "grdjmwnxsaecnech";
+            $mail->Password = "nybnwgfacgvvneaq";
             $mail->SetFrom("huzaifa2582003@gmail.com");
             $mail->AddAddress("huzaifa2582003@gmail.com");
             $mail->IsHTML(true);
