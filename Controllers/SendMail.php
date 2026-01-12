@@ -11,7 +11,7 @@ try{
                 $name    = htmlspecialchars($_POST['name']);
     $email   = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $subject = htmlspecialchars($_POST['subject']);
-    $msg     = nl2br(htmlspecialchars($_POST['msg']));
+    $msg     = nl2br(htmlspecialchars($_POST['message']));
     $fromUrl = $_POST['fromUrl'] ?? '';
                
     $phone       = !empty($_POST['phone']) ? '<br><b>Phone:</b> ' . $_POST['phone'] : '';
