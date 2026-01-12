@@ -9,6 +9,9 @@ include "Master/header.php";
 
   <!-- set breadcrumb -->
   <?php include "Master/breadcrumb.php"; ?>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+
 
   <!-- ======= Contact Section ======= -->
   <section id="contact" class="contact">
