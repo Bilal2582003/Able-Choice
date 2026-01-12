@@ -54,7 +54,8 @@ include "Master/header.php";
         </div><!-- End Google Maps -->
 
         <div class="col-lg-6">
-          <form action="../Controllers/_contact.php" method="post" class="p-2" >
+          <!-- <form action="../Controllers/_contact.php" method="post" class="p-2" > -->
+          <form method="post" class="p-2" id="contactForm" >
             <div class="row gy-4 p-2">
               <div class="col-lg-6 form-group">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -84,7 +85,32 @@ include "Master/header.php";
 </main><!-- End #main -->
 <?php
 include "Master/footer.php";
-
-
-
 ?>
+<script>
+  const ApiUrl = "https://cybernsoft.com/Able-Choice/Controllers/SendMail.php";
+const form = document.getElementById("contactForm");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault(); // stop page reload
+
+  const formData = new FormData(form);
+  formData.append("fromUrl", "Able-Choice");
+  try {
+    const response = await fetch(ApiUrl, {
+      method: "POST",
+      body: formData
+    });
+
+    const result = await response.json(); // or .json() if API returns JSON
+    console.log("Server response:", result);
+
+    // optional success handling
+    alert("Form submitted successfully!");
+    form.reset();
+
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    alert("Something went wrong. Please try again.");
+  }
+});
+</script>
