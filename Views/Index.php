@@ -71,9 +71,9 @@ setToken($con);
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-12 text-center " style="min-height:fit-content !important">
-            <h2 data-aos="fade-down">Welcome to <span>Able Choice</span></h2>
-            <p data-aos="fade-up">Our Company name is <strong>Al-Sheikh Enterprise</strong>. We are providing our service till 25 years. We have <b>one of best quality products</b>.</p>
-            <a data-aos="fade-up" data-aos-delay="200" href="Product.php" class="btn-get-started">See Our Products</a>
+            <h2 data-aos="fade-down">Welcome</h2>
+            <!-- <p data-aos="fade-up">Our Company name is <strong>Al-Sheikh Enterprise</strong>. We are providing our service till 25 years. We have <b>one of best quality products</b>.</p> -->
+            <a data-aos="fade-up" data-aos-delay="200" href="Product.php" class="btn-get-started">Products</a>
           </div>
         </div>
       </div>

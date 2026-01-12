@@ -334,7 +334,7 @@ include "../Model/connection.php";
                         // Append the new products to the product container
                         if (data == '1') {
                             // $('#productListDiv').html(data);
-                            alert("successfully Added")
+                            // alert("successfully Added")
                             showCartData()
                         } else if (data == '0') {
                             // window.location.assign('Login.php')
