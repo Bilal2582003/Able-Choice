@@ -88,7 +88,7 @@ include "Master/footer.php";
 ?>
 <script>
   // const ApiUrl = "https://cybernsoft.com/Able-Choice/Controllers/SendMail.php";
-  const ApiUrl = "../Controllers/SendMail.php";
+  const ApiUrl = "../Controllers/Conntect.php";
 const form = document.getElementById("contactForm");
 
 form.addEventListener("submit", async (e) => {
