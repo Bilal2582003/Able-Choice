@@ -9,7 +9,7 @@ try{
                 // $url = $protocol.$domainName . '/Able%20Choice/Views/Orders.php?order_id=' . $order_id;
                 $name    = htmlspecialchars($_POST['name']);
                 $email   = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-                $subject = htmlspecialchars($_POST['subject']);
+                $subject = htmlspecialchars($_POST['subject'] ?? 'no subject');
                 $msg     = nl2br(htmlspecialchars($_POST['message']));
                 $fromUrl = $_POST['fromUrl'] ?? '';
                 $phone       = $_POST['phone'] ?? null;
