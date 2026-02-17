@@ -70,10 +70,13 @@
 session_start();
 include '../Model/connection.php'; // Include your database connection file
 require '../vendor/autoload.php'; // Include Stripe's PHP library
+try{
+
 
 \Stripe\Stripe::setApiKey('sk_test_51PPoLbECxkP4UAgfPIUKlmoCju2hQBQ8SrJ3h6ZAllZHXGunWhDBF670xkEoSMXOnCn3nhf2AT2Z6L5Rlux0Uppc00OEunD4NB'); // Set your Stripe secret key
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $con->begin_transaction();
     $token = $_SESSION['token'];
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
@@ -141,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
             $domainName = $_SERVER['HTTP_HOST'];
-            $url = $protocol . $domainName . '/Able%20Choice/Views/Orders.php?order_id=' . $order_id;
+            $url = $protocol . $domainName . '/Able-20Choice/Views/Orders.php?order_id=' . $order_id;
 
             $mail = new PHPMailer(true);
             $mail->IsSMTP();
@@ -152,7 +155,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPSecure = "tls";
             $mail->SMTPAuth = true;
             $mail->Username = "huzaifa2582003@gmail.com";
-            $mail->Password = "nybnwgfacgvvneaq";
+            // $mail->Password = "nybnwgfacgvvneaq";
+            $mail->Password = "ndhxcnsoieqzogtd"; //ableChoiceEmail
             $mail->SetFrom("huzaifa2582003@gmail.com");
             $mail->AddAddress("huzaifa2582003@gmail.com");
             $mail->IsHTML(true);
@@ -183,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             if ($_SERVER['SERVER_NAME'] === 'localhost') {
                 // Localhost environment
-                $domain = 'http://localhost/Able%20Choice';
+                $domain = 'http://localhost/Able-Choice';
             } else {
                 // Live server (adjust this to your live domain)
                 $domain = 'https://able-choice.cybernsoft.com';
@@ -204,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ],
                 'mode' => 'payment',
                 'success_url' => $domain . '/Controllers/_success.php?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => $domain . '/Able%20Choice/Views/cancel.php',
+                'cancel_url' => $domain . '/Able-Choice/Views/cancel.php',
             ]);
 
             header("Location: " . $session->url);
@@ -212,8 +216,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'Error creating Stripe session: ' . $e->getMessage();
         }
     }
+    $con->commit();
 }
 
+}catch (Exception $e){
+     echo "<script>
+     alert('Error in create order please try later!');
+     window.location.href='../Views/';
+     </script>";
+}
 
 
 ?>
