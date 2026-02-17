@@ -80,7 +80,7 @@ if (isset($_GET['session_id'])) {
 
                 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
                 $domainName = $_SERVER['HTTP_HOST'];
-                $url = $protocol.$domainName . '/Able%20Choice/Views/Orders.php?order_id=' . $order_id;
+                $url = $protocol.$domainName . '/Able-Choice/Views/Orders.php?order_id=' . $order_id;
 
                 $mail = new PHPMailer(true);
                 $mail->IsSMTP();
@@ -91,7 +91,8 @@ if (isset($_GET['session_id'])) {
                 $mail->SMTPSecure = "tls";
                 $mail->SMTPAuth = true;
                 $mail->Username = "huzaifa2582003@gmail.com";
-                $mail->Password = "nybnwgfacgvvneaq";
+                // $mail->Password = "nybnwgfacgvvneaq";
+                $mail->Password = "ndhxcnsoieqzogtd";
                 $mail->SetFrom("huzaifa2582003@gmail.com");
                 $mail->AddAddress("huzaifa2582003@gmail.com");
                 $mail->IsHTML(true);
