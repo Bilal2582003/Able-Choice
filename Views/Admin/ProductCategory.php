@@ -199,7 +199,7 @@ include '../../Model/connection.php';
                 <div class="col-12" id="modalBody">
                 <div class="row">
                     <div class="col-3" style="text-align:right;"><label style="vertical-align:sub">Name</label></div>
-                    <div class="col-9"><input class="form-control" style="width: 80%; padding:5px border-radius:13px;" type="text" id="name" ></div>
+                    <div class="col-9"><input class="form-control" style="width: 80%; padding:5px; border-radius:13px;" type="text" id="name" ></div>
                 </div>
                 </div>
                 <br>

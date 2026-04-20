@@ -6,7 +6,7 @@ if (isset($_POST['Action']) && isset($_SESSION['role'])) {
   if ($_POST['Action'] == 'add') {
     $name = $_POST['name'];
 
-    $query = "INSERT INTO `Product_category`(`name`) VALUES ('$name')";
+    $query = "INSERT INTO `product_category`(`name`) VALUES ('$name')";
 
     $res = mysqli_query($con, $query);
     echo 1;
