@@ -929,12 +929,12 @@ include "../Model/connection.php";
                             // session_start();
                             $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
                             $ipAddress = $_SESSION['token'];
-                            $query = "SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where (c.user_id = '$user_id' or c.ip_address = '$ipAddress') and c.deleted_at is null";
+                             $query = "SELECT c.*,p.image1 as img, p.name as p_name from card_detail as c join product as p on c.product_id = p.id where (c.user_id = '$user_id' or c.ip_address = '$ipAddress') and c.deleted_at is null";
 
                             $res = mysqli_query($con, $query);
                             if (mysqli_num_rows($res) > 0) {
                                 while ($row = mysqli_fetch_assoc($res)) {
-                                    $totalAmount += $row['total_amount'];
+                                    $totalAmount += $row['qty'] * $row['per_amount'];
                                     echo '<tr rowspan="2">
                                 <td style="display:none">' . $row['id'] . '</td>
                                            
@@ -947,7 +947,7 @@ include "../Model/connection.php";
                                                     <p class="mb-0 " style="text-align:left">' . $row['p_name'] . '</p>
                                                     <p class="mb-0 text-secondary " style="text-align:left">Rs: <span
                                                             class="text-secondary perAmount">' . $row['per_amount'] . '</span></p>
-                                                    <p class=" totalAmount" style="display:none">' . $row['total_amount'] . '</p>
+                                                    <p class=" totalAmount" style="display:none">' .$row['qty'] * $row['per_amount'] . '</p>
                                                     <br>
                 
                                                     <div class="input-group row">
