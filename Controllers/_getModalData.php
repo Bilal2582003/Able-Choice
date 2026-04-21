@@ -7,12 +7,12 @@ if (isset($_POST['id'])) {
     $res = mysqli_query($con, $query);
     if (mysqli_num_rows($res) > 0) {
        while ($row = mysqli_fetch_assoc($res)) {
-    if (!empty($row['image2'])) {
+    if (!empty($row['image2']) && file_exists("../Assets/Images/Products/" . $row['image2'])) {
         $secondImg = '<div class="swiper-slide"><img style="height:450px; width:100%; object-fit:contain; background:#f9f9f9;" src="../Assets/Images/Products/' . $row['image2'] . '" alt=""></div>';
     } else {
         $secondImg = '';
     }
-    if (!empty($row['image3'])) {
+    if (!empty($row['image3']) && file_exists("../Assets/Images/Products/" . $row['image3'])) {
         $thirdImg = '<div class="swiper-slide"><img style="height:450px; width:100%; object-fit:contain; background:#f9f9f9;" src="../Assets/Images/Products/' . $row['image3'] . '" alt=""></div>';
     } else {
         $thirdImg = '';
