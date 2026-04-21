@@ -76,6 +76,191 @@ include "../Model/connection.php";
     .swiper-pagination-bullet {
         border: 1px solid black;
     }
+    /* Container adjustment */
+.portfolio-item {
+    padding: 15px;
+}
+
+.portfolio-content {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Image zoom effect */
+.portfolio-content img {
+    transition: transform 0.5s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.portfolio-content:hover img {
+    transform: scale(1.1);
+}
+
+/* New Hover Overlay - Modern Style */
+.portfolio-content .portfolio-info {
+    position: absolute;
+    bottom: -100%; /* Hidden below */
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    transition: all 0.4s ease;
+    text-align: center;
+    border-top: 3px solid gold; /* Construction Theme */
+}
+
+.portfolio-content:hover .portfolio-info {
+    bottom: 0; /* Slides up on hover */
+}
+
+/* Content inside Info */
+.portfolio-info h4 {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.portfolio-info p {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Amazing Hover Button */
+.details-link-btn {
+    display: inline-block;
+    background: #feb900;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+    border: none;
+}
+
+.details-link-btn:hover {
+    background: #333;
+    color: #feb900;
+}
+
+/* Fix Image Distortion */
+.modal-img-container {
+    width: 100%;
+    height: 450px; /* Fixed height for the container */
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* This prevents stretching - change to 'cover' if you want it full bleed */
+    transition: 0.3s;
+}
+
+/* UI Enhancements */
+.product-modal-wrapper {
+    padding: 10px;
+    color: #333;
+}
+
+.category-badge {
+    background: #fff3cd;
+    color: #856404;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.product-title {
+    font-size: 28px;
+    font-weight: 800;
+    margin-top: 10px;
+    color: #212529;
+}
+
+.price-section {
+    margin: 20px 0;
+}
+
+.price-section .amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #d9534f;
+}
+
+/* Modern Quantity Selector */
+.qty-selector {
+    width: 140px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.qty-selector input {
+    border: none !important;
+    font-weight: bold;
+}
+
+.qty-selector .btn {
+    border: none;
+    background: #f1f1f1;
+    color: #333;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    border-bottom: 2px solid #feb900;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.description-text {
+    line-height: 1.8;
+    color: #555;
+}
+
+.specs-card {
+    background: #fdfdfd;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+/* The animation keyframes */
+@keyframes cameraClick {
+    0% {
+        filter: brightness(1);
+        transform: scale(1);
+    }
+    20% {
+        filter: brightness(1.8); /* The flash */
+        transform: scale(0.98); /* Slight shrink */
+    }
+    100% {
+        filter: brightness(1);
+        transform: scale(1);
+    }
+}
+
+/* The class that triggers the animation */
+.click-effect {
+    animation: cameraClick 0.4s ease-out;
+}
+
 </style>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -126,15 +311,18 @@ include "../Model/connection.php";
                         ?>
                         <div class="col-lg-4 col-md-6 portfolio-item filter-<?php echo $row["category_id"] ?>">
                             <div class="portfolio-content h-100">
+                                <div style="text-transform: uppercase; position:absolute; top:10px; left:10px; z-index:2; background:gold; padding:2px 10px; font-size:10px; font-weight:700; border-radius:3px;">
+             <?php echo $row['product_category_name'] ?>
+        </div>
                                 <img src="../Assets/Images/Products/<?php echo $row['image1'] ?>" class="img-fluid inImage"
                                     alt="">
                                 <div class="portfolio-info">
-                                    <h4 style="text-transform: capitalize">
-                                        <?php echo $row['product_category_name'] ?>
-                                    </h4>
+                                    <!-- <h4>
+                                        <?php // echo $row['product_category_name'] ?>
+                                    </h4> -->
                                     <p><?php echo $row['name'] ?></p>
-                                    <button title="More Details" class="details-link"
-                                        style="border:0px;background-color:transparent;" id="moreDetail"
+                                    <button title="More Details" class="details-link-btn"
+                                         id="moreDetail"
                                         onclick="openModal(`moreDetailModal`, <?php echo $row['id'] ?> )">
                                         <i class="bi bi-link-45deg"></i>
                                     </button>
@@ -346,6 +534,18 @@ include "../Model/connection.php";
             }
 
             $(document).on('click', '#AddToCartBtn', function () {
+
+            // Target the images inside the swiper
+    const $images = $('.swiper-wrapper img');
+
+    // Add the class to trigger CSS animation
+    $images.addClass('click-effect');
+
+    // Remove the class after animation finishes so it can be re-triggered
+    setTimeout(function() {
+        $images.removeClass('click-effect');
+    }, 400);
+
                 var id = $("#AddToCartId").html();
                 var totalAmount = $(".totalAmountTotalAmount").html();
                 var amount = $("#perAmountPerAmount").html();

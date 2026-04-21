@@ -76,7 +76,7 @@
                             </td>
                             <td colspan="5">
                                 <div class="row">
-                                    <p class="mb-0 " style="text-align:left;font">Vans Sk8-Hi MTE Shoes</p>
+                                    <p class="mb-0 " style="text-align:left;">Vans Sk8-Hi MTE Shoes</p>
                                     <p class="mb-0 text-secondary " style="text-align:left">Rs: <span
                                             class="text-secondary perAmount">2000</span></p>
                                     <p class=" totalAmount" style="display:none"> 2000</p>
