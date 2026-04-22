@@ -301,7 +301,6 @@ include "../Model/connection.php";
                     FROM product p 
                     JOIN product_category c ON p.product_category_id = c.id
                     WHERE p.deleted_at IS NULL
-                    GROUP BY c.id
                     ORDER BY RAND()
                     LIMIT 15
                 ";
